@@ -16,7 +16,7 @@ RSpec.describe Looped::Memory do
       expect(memory.entries.length).to eq(1)
       entry = memory.entries.first
       expect(entry.action_type).to eq('read_file')
-      expect(entry.action_input).to eq({ path: '/test.rb' })
+      expect(entry.action_input).to eq({ 'path' => '/test.rb' })
       expect(entry.action_output).to eq('file contents')
       expect(entry.timestamp).not_to be_nil
     end
@@ -77,7 +77,7 @@ RSpec.describe Looped::Memory do
       context = memory.to_context
       expect(context.length).to eq(1)
       expect(context.first).to be_a(Looped::Types::ActionSummary)
-      expect(context.first.action).to eq('read_file')
+      expect(context.first.action).to eq('read_file(path=/test.rb)')
       expect(context.first.result.length).to be <= 503 # 500 + '...'
     end
 

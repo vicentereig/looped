@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'async'
-require 'async/io'
 require 'readline'
 
 module Looped

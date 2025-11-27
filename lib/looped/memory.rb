@@ -17,22 +17,27 @@ module Looped
 
     sig do
       params(
-        action: String,
-        input: T::Hash[String, T.untyped],
-        output: String,
-        model_id: T.nilable(String)
+        action_type: String,
+        action_input: T::Hash[T.any(String, Symbol), T.untyped],
+        action_output: String,
+        model_id: T.nilable(String),
+        tokens_used: T.nilable(Integer),
+        error: T.nilable(String)
       ).void
     end
-    def add(action:, input:, output:, model_id: nil)
+    def add(action_type:, action_input:, action_output:, model_id: nil, tokens_used: nil, error: nil)
       @entries << Types::MemoryEntry.new(
-        action_type: action,
-        action_input: input,
-        action_output: output,
+        action_type: action_type,
+        action_input: stringify_keys(action_input),
+        action_output: action_output,
         timestamp: Time.now.utc.iso8601,
         model_id: model_id,
-        error: nil,
-        tokens_used: nil
+        error: error,
+        tokens_used: tokens_used
       )
+
+      # Enforce max_entries limit
+      @entries.shift while @entries.size > @max_entries
     end
 
     sig { returns(T::Array[Types::ActionSummary]) }
@@ -60,7 +65,17 @@ module Looped
       @entries.clear
     end
 
+    sig { params(n: Integer).returns(T::Array[Types::MemoryEntry]) }
+    def recent(n)
+      @entries.last(n)
+    end
+
     private
+
+    sig { params(hash: T::Hash[T.any(String, Symbol), T.untyped]).returns(T::Hash[String, T.untyped]) }
+    def stringify_keys(hash)
+      hash.transform_keys(&:to_s)
+    end
 
     sig { params(entry: Types::MemoryEntry).returns(String) }
     def summarize_action(entry)

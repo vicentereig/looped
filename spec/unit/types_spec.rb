@@ -7,13 +7,13 @@ RSpec.describe 'Looped::Types' do
     it 'creates a valid entry with required fields' do
       entry = described_class.new(
         action_type: 'read_file',
-        action_input: { path: '/test.rb' },
+        action_input: { 'path' => '/test.rb' },
         action_output: 'contents',
         timestamp: '2024-01-01T10:00:00Z'
       )
 
       expect(entry.action_type).to eq('read_file')
-      expect(entry.action_input).to eq({ path: '/test.rb' })
+      expect(entry.action_input).to eq({ 'path' => '/test.rb' })
       expect(entry.action_output).to eq('contents')
       expect(entry.timestamp).to eq('2024-01-01T10:00:00Z')
     end
