@@ -8,6 +8,6 @@ gemspec
 gem 'dotenv', '~> 2.8'
 
 # Use released dspy gem
-gem 'dspy', '~> 0.30.0'
-gem 'gepa', '~> 1.0'
+gem 'dspy', '~> 0.31.1'
+gem 'gepa', '~> 1.0.1'
 gem 'polars-df', '~> 0.23'

@@ -30,8 +30,8 @@ Gem::Specification.new do |spec|
 
   # Runtime dependencies
   spec.add_dependency 'async', '~> 2.23'
-  spec.add_dependency 'dspy', '~> 0.30.0'
-  spec.add_dependency 'gepa', '~> 1.0'
+  spec.add_dependency 'dspy', '~> 0.31.1'
+  spec.add_dependency 'gepa', '~> 1.0.1'
   spec.add_dependency 'polars-df', '~> 0.23'
   spec.add_dependency 'sorbet-runtime', '~> 0.5'
 
