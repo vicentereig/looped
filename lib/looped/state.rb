@@ -8,12 +8,19 @@ module Looped
   class State
     extend T::Sig
 
-    STORAGE_DIR = T.let(File.expand_path('~/.looped'), String)
+    DEFAULT_STORAGE_DIR = T.let(File.expand_path('~/.looped'), String)
 
-    sig { void }
-    def initialize
-      FileUtils.mkdir_p(STORAGE_DIR)
-      FileUtils.mkdir_p(File.join(STORAGE_DIR, 'history'))
+    sig { returns(String) }
+    attr_reader :storage_dir
+
+    sig { params(storage_dir: T.nilable(String)).void }
+    def initialize(storage_dir: nil)
+      @storage_dir = T.let(
+        storage_dir || ENV['LOOPED_STORAGE_DIR'] || DEFAULT_STORAGE_DIR,
+        String
+      )
+      FileUtils.mkdir_p(@storage_dir)
+      FileUtils.mkdir_p(File.join(@storage_dir, 'history'))
     end
 
     sig { returns(T.nilable(Types::Instructions)) }
@@ -70,7 +77,7 @@ module Looped
       return [] if buffer.empty?
 
       # Archive to history
-      archive_path = File.join(STORAGE_DIR, 'history', "#{Time.now.to_i}.json")
+      archive_path = File.join(@storage_dir, 'history', "#{Time.now.to_i}.json")
       File.write(archive_path, JSON.pretty_generate(load_training_buffer_raw))
 
       # Clear buffer
@@ -79,21 +86,16 @@ module Looped
       buffer
     end
 
-    sig { returns(String) }
-    def storage_dir
-      STORAGE_DIR
-    end
-
     private
 
     sig { returns(String) }
     def instructions_path
-      File.join(STORAGE_DIR, 'instructions.json')
+      File.join(@storage_dir, 'instructions.json')
     end
 
     sig { returns(String) }
     def training_buffer_path
-      File.join(STORAGE_DIR, 'training_buffer.json')
+      File.join(@storage_dir, 'training_buffer.json')
     end
 
     sig { returns(T::Array[T::Hash[Symbol, T.untyped]]) }

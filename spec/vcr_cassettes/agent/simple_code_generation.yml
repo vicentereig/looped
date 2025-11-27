@@ -1,0 +1,783 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts and actions, including observations from tools.\"\n    },\n    \"available_tools\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\":
+        {\n          \"_type\": {\n            \"type\": \"string\",\n            \"const\":
+        \"AvailableTool\"\n          },\n          \"name\": {\n            \"type\":
+        \"string\"\n          },\n          \"description\": {\n            \"type\":
+        \"string\"\n          },\n          \"schema\": {\n            \"type\": \"object\",\n            \"propertyNames\":
+        {\n              \"type\": \"string\"\n            },\n            \"additionalProperties\":
+        {\n              \"type\": \"string\"\n            },\n            \"description\":
+        \"A mapping where keys are strings and values are strings\"\n          }\n        },\n        \"required\":
+        [\n          \"_type\",\n          \"name\",\n          \"description\",\n          \"schema\"\n        ],\n        \"description\":
+        \"DSPy::ReAct::AvailableTool struct\"\n      },\n      \"description\": \"Array
+        of available tools with their JSON schemas.\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"available_tools\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"thought\": {\n      \"type\": \"string\",\n      \"description\":
+        \"Reasoning about what to do next, considering the history and observations.\"\n    },\n    \"action\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"read_file\",\n        \"write_file\",\n        \"search_code\",\n        \"run_command\",\n        \"finish\"\n      ],\n      \"description\":
+        \"The action to take. MUST be one of the tool names listed in `available_tools`
+        input, or the literal string \\\"finish\\\" to provide the final answer.\"\n    },\n    \"action_input\":
+        {\n      \"type\": \"string\",\n      \"description\": \"Input for the chosen
+        action. If action is a tool name, this MUST be a JSON object matching the
+        tool''s schema. If action is \\\"finish\\\", this field MUST contain the final
+        result based on processing the input data.\"\n    }\n  },\n  \"required\":
+        [\n    \"thought\",\n    \"action\",\n    \"action_input\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Generate a thought about what to do next to process the given
+        inputs."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"Write a Ruby function
+        that checks if a string is a palindrome. Save it to palindrome.rb\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [],\n  \"available_tools\": [\n    {\n      \"name\": \"read_file\",\n      \"description\":
+        \"Read contents of a file at the given path\",\n      \"schema\": {\n        \"name\":
+        \"read_file\",\n        \"description\": \"Read contents of a file at the
+        given path\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"path\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter path\"\n            }\n          },\n          \"required\": [\n            \"path\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"write_file\",\n      \"description\": \"Write content to a file at the given
+        path. Creates parent directories if needed.\",\n      \"schema\": {\n        \"name\":
+        \"write_file\",\n        \"description\": \"Write content to a file at the
+        given path. Creates parent directories if needed.\",\n        \"parameters\":
+        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"path\":
+        {\n              \"type\": \"string\",\n              \"description\": \"Parameter
+        path\"\n            },\n            \"content\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter content\"\n            }\n          },\n          \"required\":
+        [\n            \"path\",\n            \"content\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"search_code\",\n      \"description\": \"Search for a pattern in code files
+        using ripgrep. Returns matching lines with file paths and line numbers.\",\n      \"schema\":
+        {\n        \"name\": \"search_code\",\n        \"description\": \"Search for
+        a pattern in code files using ripgrep. Returns matching lines with file paths
+        and line numbers.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"pattern\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter pattern\"\n            },\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path (optional)\"\n            },\n            \"file_type\":
+        {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ],\n              \"description\":
+        \"Parameter file_type (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"pattern\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"run_command\",\n      \"description\": \"Execute a shell command and return
+        its output. Use for running tests, linters, or other development tools.\",\n      \"schema\":
+        {\n        \"name\": \"run_command\",\n        \"description\": \"Execute
+        a shell command and return its output. Use for running tests, linters, or
+        other development tools.\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"command\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter command\"\n            },\n            \"timeout\":
+        {\n              \"type\": \"integer\",\n              \"description\": \"Parameter
+        timeout (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"command\"\n          ]\n        }\n      }\n    }\n  ]\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '8569'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 27 Nov 2025 22:56:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '3244'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '3258'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9989'
+      X-Ratelimit-Remaining-Tokens:
+      - '198085'
+      X-Ratelimit-Reset-Requests:
+      - 1m27.247s
+      X-Ratelimit-Reset-Tokens:
+      - 574ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5537b9bcd4437e-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgfCIHh1hcQ17PwOtG7O1i2uWrubc",
+          "object": "chat.completion",
+          "created": 1764284174,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"thought\": \"I need to write a Ruby function to check if a string is a palindrome. Since the task specifies creating a file named 'palindrome.rb', I should use the 'write_file' action to save the function implementation to this file.\",\n  \"action\": \"write_file\",\n  \"action_input\": {\n    \"path\": \"palindrome.rb\",\n    \"content\": \"def palindrome?(string)\\n  string == string.reverse\\nend\"\n  }\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1642,
+            "completion_tokens": 106,
+            "total_tokens": 1748,
+            "prompt_tokens_details": {
+              "cached_tokens": 1536,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Thu, 27 Nov 2025 22:56:17 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts, actions, and observations.\"\n    },\n    \"observation\": {\n      \"type\":
+        \"string\",\n      \"description\": \"The result from the last action\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"observation\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"interpretation\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Interpretation of the observation\"\n    },\n    \"next_step\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"continue\",\n        \"finish\"\n      ],\n      \"description\":
+        \"What to do next: ''#<DSPy::NextStep::Continue>'' or ''#<DSPy::NextStep::Finish>''\"\n    }\n  },\n  \"required\":
+        [\n    \"interpretation\",\n    \"next_step\"\n  ]\n}\n```\n\nAll interactions
+        will be structured in the following way, with the appropriate values filled
+        in.\n## Input values\n```json\n{input_values}\n```\n## Output values\nRespond
+        exclusively with the output schema fields in the json block below.\n```json\n{output_values}\n```\n\nIn
+        adhering to this structure, your objective is: Process the observation from
+        a tool and decide what to do next."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"Write a Ruby function
+        that checks if a string is a palindrome. Save it to palindrome.rb\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [\n    {\n      \"step\": 1,\n      \"thought\": \"I need to write a Ruby
+        function to check if a string is a palindrome. Since the task specifies creating
+        a file named ''palindrome.rb'', I should use the ''write_file'' action to
+        save the function implementation to this file.\",\n      \"action\": \"write_file\",\n      \"action_input\":
+        {\n        \"path\": \"palindrome.rb\",\n        \"content\": \"def palindrome?(string)\\n  string
+        == string.reverse\\nend\"\n      },\n      \"observation\": \"Successfully
+        wrote 54 bytes to palindrome.rb\"\n    }\n  ],\n  \"observation\": \"Successfully
+        wrote 54 bytes to palindrome.rb\"\n}\n```\n\nRespond with the corresponding
+        output schema fields wrapped in a ```json ``` block,\nstarting with the heading
+        `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '4445'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 27 Nov 2025 22:56:19 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1182'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '1208'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9989'
+      X-Ratelimit-Remaining-Tokens:
+      - '199016'
+      X-Ratelimit-Reset-Requests:
+      - 1m32.518s
+      X-Ratelimit-Reset-Tokens:
+      - 295ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5537cf092a437e-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgfCL8Ih7Kq4FmwNCwSad4jaaKXoc",
+          "object": "chat.completion",
+          "created": 1764284177,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"interpretation\": \"The function has been successfully written to the palindrome.rb file, and now it can be executed or tested.\",\n  \"next_step\": \"finish\"\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 893,
+            "completion_tokens": 45,
+            "total_tokens": 938,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Thu, 27 Nov 2025 22:56:19 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts and actions, including observations from tools.\"\n    },\n    \"available_tools\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\":
+        {\n          \"_type\": {\n            \"type\": \"string\",\n            \"const\":
+        \"AvailableTool\"\n          },\n          \"name\": {\n            \"type\":
+        \"string\"\n          },\n          \"description\": {\n            \"type\":
+        \"string\"\n          },\n          \"schema\": {\n            \"type\": \"object\",\n            \"propertyNames\":
+        {\n              \"type\": \"string\"\n            },\n            \"additionalProperties\":
+        {\n              \"type\": \"string\"\n            },\n            \"description\":
+        \"A mapping where keys are strings and values are strings\"\n          }\n        },\n        \"required\":
+        [\n          \"_type\",\n          \"name\",\n          \"description\",\n          \"schema\"\n        ],\n        \"description\":
+        \"DSPy::ReAct::AvailableTool struct\"\n      },\n      \"description\": \"Array
+        of available tools with their JSON schemas.\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"available_tools\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"thought\": {\n      \"type\": \"string\",\n      \"description\":
+        \"Reasoning about what to do next, considering the history and observations.\"\n    },\n    \"action\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"read_file\",\n        \"write_file\",\n        \"search_code\",\n        \"run_command\",\n        \"finish\"\n      ],\n      \"description\":
+        \"The action to take. MUST be one of the tool names listed in `available_tools`
+        input, or the literal string \\\"finish\\\" to provide the final answer.\"\n    },\n    \"action_input\":
+        {\n      \"type\": \"string\",\n      \"description\": \"Input for the chosen
+        action. If action is a tool name, this MUST be a JSON object matching the
+        tool''s schema. If action is \\\"finish\\\", this field MUST contain the final
+        result based on processing the input data.\"\n    }\n  },\n  \"required\":
+        [\n    \"thought\",\n    \"action\",\n    \"action_input\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Generate a thought about what to do next to process the given
+        inputs."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"Write a Ruby function
+        that checks if a string is a palindrome. Save it to palindrome.rb\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [\n    {\n      \"step\": 1,\n      \"thought\": \"I need to write a Ruby
+        function to check if a string is a palindrome. Since the task specifies creating
+        a file named ''palindrome.rb'', I should use the ''write_file'' action to
+        save the function implementation to this file.\",\n      \"action\": \"write_file\",\n      \"action_input\":
+        {\n        \"path\": \"palindrome.rb\",\n        \"content\": \"def palindrome?(string)\\n  string
+        == string.reverse\\nend\"\n      },\n      \"observation\": \"Successfully
+        wrote 54 bytes to palindrome.rb\"\n    }\n  ],\n  \"available_tools\": [\n    {\n      \"name\":
+        \"read_file\",\n      \"description\": \"Read contents of a file at the given
+        path\",\n      \"schema\": {\n        \"name\": \"read_file\",\n        \"description\":
+        \"Read contents of a file at the given path\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path\"\n            }\n          },\n          \"required\":
+        [\n            \"path\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"write_file\",\n      \"description\": \"Write content to a file at the given
+        path. Creates parent directories if needed.\",\n      \"schema\": {\n        \"name\":
+        \"write_file\",\n        \"description\": \"Write content to a file at the
+        given path. Creates parent directories if needed.\",\n        \"parameters\":
+        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"path\":
+        {\n              \"type\": \"string\",\n              \"description\": \"Parameter
+        path\"\n            },\n            \"content\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter content\"\n            }\n          },\n          \"required\":
+        [\n            \"path\",\n            \"content\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"search_code\",\n      \"description\": \"Search for a pattern in code files
+        using ripgrep. Returns matching lines with file paths and line numbers.\",\n      \"schema\":
+        {\n        \"name\": \"search_code\",\n        \"description\": \"Search for
+        a pattern in code files using ripgrep. Returns matching lines with file paths
+        and line numbers.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"pattern\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter pattern\"\n            },\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path (optional)\"\n            },\n            \"file_type\":
+        {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ],\n              \"description\":
+        \"Parameter file_type (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"pattern\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"run_command\",\n      \"description\": \"Execute a shell command and return
+        its output. Use for running tests, linters, or other development tools.\",\n      \"schema\":
+        {\n        \"name\": \"run_command\",\n        \"description\": \"Execute
+        a shell command and return its output. Use for running tests, linters, or
+        other development tools.\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"command\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter command\"\n            },\n            \"timeout\":
+        {\n              \"type\": \"integer\",\n              \"description\": \"Parameter
+        timeout (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"command\"\n          ]\n        }\n      }\n    }\n  ]\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '9121'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 27 Nov 2025 22:56:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2836'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2850'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9988'
+      X-Ratelimit-Remaining-Tokens:
+      - '197956'
+      X-Ratelimit-Reset-Requests:
+      - 1m39.852s
+      X-Ratelimit-Reset-Tokens:
+      - 613ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5537d71dba437e-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgfCNpLFSG6iuqAUgHQdEmFMIJwS6",
+          "object": "chat.completion",
+          "created": 1764284179,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"thought\": \"Now that the Ruby function has been written to check for palindromes and saved to 'palindrome.rb', I should verify that the function works as expected. I can do this by running a command to execute a test on the function, providing appropriate test cases as input.\",\n  \"action\": \"run_command\",\n  \"action_input\": {\n    \"command\": \"ruby -e \\\"require './palindrome.rb'; puts palindrome?('racecar'); puts palindrome?('hello');\\\"\"\n  }\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1766,
+            "completion_tokens": 116,
+            "total_tokens": 1882,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Thu, 27 Nov 2025 22:56:22 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"task\": {\n      \"type\": \"string\"\n    },\n    \"solution\":
+        {\n      \"type\": \"string\"\n    },\n    \"expected_behavior\": {\n      \"type\":
+        \"string\"\n    }\n  },\n  \"required\": [\n    \"task\",\n    \"solution\",\n    \"expected_behavior\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"score\": {\n      \"type\": \"number\"\n    },\n    \"passed\":
+        {\n      \"type\": \"boolean\"\n    },\n    \"critique\": {\n      \"type\":
+        \"string\"\n    },\n    \"suggestions\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\n    \"score\",\n    \"passed\",\n    \"critique\",\n    \"suggestions\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Evaluate code quality and correctness. Be critical and thorough."},{"role":"user","content":"##
+        Input Values\n```json\n{\n  \"task\": \"Write a Ruby function that checks
+        if a string is a palindrome. Save it to palindrome.rb\",\n  \"solution\":
+        \"The function has been successfully written to the palindrome.rb file, and
+        now it can be executed or tested.\",\n  \"expected_behavior\": \"The solution
+        should correctly and completely address the task: Write a Ruby function that
+        checks if a string is a palindrome. Save it to palindrome.rb\"\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '2059'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 27 Nov 2025 22:56:26 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '4552'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '4622'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9987'
+      X-Ratelimit-Remaining-Tokens:
+      - '199554'
+      X-Ratelimit-Reset-Requests:
+      - 1m45.469s
+      X-Ratelimit-Reset-Tokens:
+      - 133ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5537ea096b437e-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgfCQymaTTGfiixOuA9CPVYu7EFaF",
+          "object": "chat.completion",
+          "created": 1764284182,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"score\": 2.5,\n  \"passed\": false,\n  \"critique\": \"The solution mentions that the function has been written but does not provide the actual code or implementation for checking if a string is a palindrome. Without the actual Ruby function, it's impossible to evaluate whether the task has been addressed correctly. More detail is needed to assess the quality of the solution.\",\n  \"suggestions\": [\n    \"Provide the Ruby code that implements the palindrome checking logic.\",\n    \"Add test cases to demonstrate that the function works as expected.\",\n    \"Include comments in the code for better readability and understanding.\"\n  ]\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 456,
+            "completion_tokens": 136,
+            "total_tokens": 592,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Thu, 27 Nov 2025 22:56:26 GMT
+recorded_with: VCR 6.3.1

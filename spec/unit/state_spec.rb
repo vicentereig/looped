@@ -4,24 +4,14 @@ require 'spec_helper'
 require 'tmpdir'
 
 RSpec.describe Looped::State do
-  let(:temp_dir) { Dir.mktmpdir }
+  # Use the temp dir set by spec_helper via ENV['LOOPED_STORAGE_DIR']
   subject(:state) { described_class.new }
-
-  before do
-    # Override STORAGE_DIR for testing
-    stub_const('Looped::State::STORAGE_DIR', temp_dir)
-    FileUtils.mkdir_p(File.join(temp_dir, 'history'))
-  end
-
-  after do
-    FileUtils.rm_rf(temp_dir)
-  end
 
   describe '#initialize' do
     it 'creates storage directories' do
-      state = described_class.new
-      expect(Dir.exist?(temp_dir)).to be true
-      expect(Dir.exist?(File.join(temp_dir, 'history'))).to be true
+      new_state = described_class.new
+      expect(Dir.exist?(new_state.storage_dir)).to be true
+      expect(Dir.exist?(File.join(new_state.storage_dir, 'history'))).to be true
     end
   end
 
@@ -141,7 +131,7 @@ RSpec.describe Looped::State do
       it 'archives consumed results to history' do
         state.consume_training_buffer
 
-        history_files = Dir.glob(File.join(temp_dir, 'history', '*.json'))
+        history_files = Dir.glob(File.join(state.storage_dir, 'history', '*.json'))
         expect(history_files.length).to eq(1)
       end
 
@@ -153,8 +143,15 @@ RSpec.describe Looped::State do
   end
 
   describe '#storage_dir' do
-    it 'returns the storage directory path' do
-      expect(state.storage_dir).to eq(temp_dir)
+    it 'returns the storage directory path from environment' do
+      expect(state.storage_dir).to eq(ENV['LOOPED_STORAGE_DIR'])
+    end
+
+    it 'accepts custom storage_dir in constructor' do
+      Dir.mktmpdir('custom_looped') do |custom_dir|
+        custom_state = described_class.new(storage_dir: custom_dir)
+        expect(custom_state.storage_dir).to eq(custom_dir)
+      end
     end
   end
 end

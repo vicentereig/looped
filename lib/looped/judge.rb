@@ -5,16 +5,22 @@ module Looped
   class Judge
     extend T::Sig
 
-    DEFAULT_MODEL = 'gpt-4o-mini'
+    DEFAULT_MODEL = 'openai/gpt-4o-mini'
 
     sig { returns(DSPy::Predict) }
     attr_reader :predictor
 
-    sig { params(model: T.nilable(String)).void }
-    def initialize(model: nil)
+    sig { params(model: T.nilable(String), api_key: T.nilable(String)).void }
+    def initialize(model: nil, api_key: nil)
       model_id = model || ENV.fetch('LOOPED_JUDGE_MODEL', DEFAULT_MODEL)
-      lm = DSPy::LM.new(model_id)
-      @predictor = T.let(DSPy::Predict.new(Signatures::JudgeSignature, lm: lm), DSPy::Predict)
+      resolved_api_key = api_key || resolve_api_key(model_id)
+
+      # Configure DSPy with our LM
+      DSPy.configure do |c|
+        c.lm = DSPy::LM.new(model_id, api_key: resolved_api_key)
+      end
+
+      @predictor = T.let(DSPy::Predict.new(Looped::JudgeSignature), DSPy::Predict)
     end
 
     sig { params(task: String, solution: String, expected_behavior: String).returns(Types::Judgment) }
@@ -54,6 +60,21 @@ module Looped
     end
 
     private
+
+    sig { params(model_id: String).returns(T.nilable(String)) }
+    def resolve_api_key(model_id)
+      provider = model_id.split('/').first
+      case provider
+      when 'openai'
+        ENV['OPENAI_API_KEY']
+      when 'anthropic'
+        ENV['ANTHROPIC_API_KEY']
+      when 'gemini', 'google'
+        ENV['GEMINI_API_KEY']
+      else
+        ENV['OPENAI_API_KEY'] # Default fallback
+      end
+    end
 
     sig { params(task: String).returns(String) }
     def infer_expected_behavior(task)

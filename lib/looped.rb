@@ -3,6 +3,7 @@
 
 require 'sorbet-runtime'
 require 'dspy'
+require 'dspy/openai'
 
 # Load GEPA extension
 begin

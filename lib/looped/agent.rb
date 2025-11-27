@@ -5,7 +5,7 @@ module Looped
   class Agent
     extend T::Sig
 
-    DEFAULT_MODEL = 'gpt-4o-mini'
+    DEFAULT_MODEL = 'openai/gpt-4o-mini'
     DEFAULT_MAX_ITERATIONS = 10
 
     sig { returns(DSPy::ReAct) }
@@ -91,7 +91,7 @@ module Looped
     def build_react_agent(thought_instruction: nil, observation_instruction: nil)
       # Configure DSPy with our model
       DSPy.configure do |config|
-        config.lm = DSPy::LM.new(@model_id)
+        config.lm = DSPy::LM.new(@model_id, api_key: resolve_api_key(@model_id))
       end
 
       # Build tools
@@ -104,7 +104,7 @@ module Looped
 
       # Create base ReAct agent
       agent = DSPy::ReAct.new(
-        Signatures::CodingTaskSignature,
+        Looped::CodingTaskSignature,
         tools: tools,
         max_iterations: @max_iterations
       )
@@ -131,9 +131,18 @@ module Looped
 
       # Record actions in memory
       result.history.each do |entry|
+        # Normalize action_input to a hash
+        action_input = entry[:action_input]
+        action_input = case action_input
+                       when Hash then action_input
+                       when String then { 'input' => action_input }
+                       when NilClass then {}
+                       else { 'value' => action_input.to_s }
+                       end
+
         @memory.add(
           action_type: entry[:action] || 'unknown',
-          action_input: entry[:action_input] || {},
+          action_input: action_input,
           action_output: entry[:observation]&.to_s || '',
           model_id: @model_id
         )
@@ -155,6 +164,21 @@ module Looped
       # Reload if mtime changed
       if @instructions_mtime != instructions.updated_at
         reload_instructions
+      end
+    end
+
+    sig { params(model_id: String).returns(T.nilable(String)) }
+    def resolve_api_key(model_id)
+      provider = model_id.split('/').first
+      case provider
+      when 'openai'
+        ENV['OPENAI_API_KEY']
+      when 'anthropic'
+        ENV['ANTHROPIC_API_KEY']
+      when 'gemini', 'google'
+        ENV['GEMINI_API_KEY']
+      else
+        ENV['OPENAI_API_KEY']
       end
     end
   end

@@ -1,0 +1,34 @@
+# Dependencies
+/.bundle/
+/vendor/bundle
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+/*.gem
+/pkg/
+/tmp/
+
+# Coverage
+/coverage/
+
+# Documentation
+/doc/
+/.yardoc/
+
+# IDE
+.idea/
+*.swp
+*.swo
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Looped state (for development)
+# ~/.looped/ is the actual location, but ignore any local copies
+/.looped/
