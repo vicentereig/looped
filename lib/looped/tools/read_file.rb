@@ -11,13 +11,24 @@ module Looped
 
       sig { params(path: String).returns(String) }
       def call(path:)
-        File.read(path)
+        resolved_path = resolve_path(path)
+        File.read(resolved_path)
       rescue Errno::ENOENT
         "Error: File not found: #{path}"
       rescue Errno::EACCES
         "Error: Permission denied: #{path}"
       rescue StandardError => e
         "Error: #{e.message}"
+      end
+
+      private
+
+      sig { params(path: String).returns(String) }
+      def resolve_path(path)
+        sandbox = ENV['LOOPED_SANDBOX_DIR']
+        return path if sandbox.nil? || path.start_with?('/')
+
+        File.join(sandbox, path)
       end
     end
   end

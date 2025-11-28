@@ -76,15 +76,20 @@ RSpec.configure do |config|
   config.order = :random
   Kernel.srand config.seed
 
-  # Use a temp directory for state during tests
+  # Use temp directories for state and file operations during tests
   config.around(:each) do |example|
     Dir.mktmpdir('looped_test') do |tmpdir|
       # Override the storage directory via environment variable
       original_storage_dir = ENV['LOOPED_STORAGE_DIR']
+      original_sandbox_dir = ENV['LOOPED_SANDBOX_DIR']
+
       ENV['LOOPED_STORAGE_DIR'] = tmpdir
+      ENV['LOOPED_SANDBOX_DIR'] = tmpdir
+
       example.run
     ensure
       ENV['LOOPED_STORAGE_DIR'] = original_storage_dir
+      ENV['LOOPED_SANDBOX_DIR'] = original_sandbox_dir
     end
   end
 end
