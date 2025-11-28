@@ -268,14 +268,15 @@ Any model supported by DSPy.rb:
 # OpenAI
 'openai/gpt-4o'
 'openai/gpt-4o-mini'
+'openai/o3-mini'
 
 # Anthropic
-'anthropic/claude-3-5-sonnet-20241022'
-'anthropic/claude-3-haiku-20240307'
+'anthropic/claude-sonnet-4-5-20250929'
+'anthropic/claude-3-5-haiku-20241022'
 
 # Google
-'gemini/gemini-1.5-pro'
-'gemini/gemini-1.5-flash'
+'gemini/gemini-2.5-pro'
+'gemini/gemini-2.0-flash'
 ```
 
 ## How It Works
