@@ -1,0 +1,8 @@
+Found the following functions in the code:
+1. def initialize
+2. def add(action:, input:, output:, model_id: nil)
+3. def to_context
+4. def entries
+5. def clear
+
+... [complete the list based on actual functions found] ...

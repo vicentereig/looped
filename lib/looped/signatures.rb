@@ -50,8 +50,8 @@ module Looped
     end
 
     output do
-      const :intent, String, desc: 'new_task | follow_up | select_suggestion'
-      const :resolved_task, String, desc: 'The executable task (use suggestion text if selecting)'
+      const :intent, Types::Intent
+      const :resolved_task, String, description: 'The executable task (use suggestion text if selecting)'
       const :suggestion_index, T.nilable(Integer)
       const :confidence, Float
       const :reasoning, String

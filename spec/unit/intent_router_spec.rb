@@ -173,27 +173,32 @@ RSpec.describe Looped::IntentRouter do
     end
   end
 
-  describe '#parse_intent' do
-    it 'parses new_task' do
-      expect(router.send(:parse_intent, 'new_task')).to eq(Looped::Types::Intent::NewTask)
+  describe '#normalize_intent' do
+    it 'passes through Intent enum directly' do
+      expect(router.send(:normalize_intent, Looped::Types::Intent::NewTask)).to eq(Looped::Types::Intent::NewTask)
+      expect(router.send(:normalize_intent, Looped::Types::Intent::FollowUp)).to eq(Looped::Types::Intent::FollowUp)
     end
 
-    it 'parses follow_up' do
-      expect(router.send(:parse_intent, 'follow_up')).to eq(Looped::Types::Intent::FollowUp)
+    it 'parses new_task string' do
+      expect(router.send(:normalize_intent, 'new_task')).to eq(Looped::Types::Intent::NewTask)
     end
 
-    it 'parses select_suggestion' do
-      expect(router.send(:parse_intent, 'select_suggestion')).to eq(Looped::Types::Intent::SelectSuggestion)
+    it 'parses follow_up string' do
+      expect(router.send(:normalize_intent, 'follow_up')).to eq(Looped::Types::Intent::FollowUp)
+    end
+
+    it 'parses select_suggestion string' do
+      expect(router.send(:normalize_intent, 'select_suggestion')).to eq(Looped::Types::Intent::SelectSuggestion)
     end
 
     it 'defaults to new_task for unknown values' do
-      expect(router.send(:parse_intent, 'unknown')).to eq(Looped::Types::Intent::NewTask)
-      expect(router.send(:parse_intent, '')).to eq(Looped::Types::Intent::NewTask)
+      expect(router.send(:normalize_intent, 'unknown')).to eq(Looped::Types::Intent::NewTask)
+      expect(router.send(:normalize_intent, '')).to eq(Looped::Types::Intent::NewTask)
     end
 
     it 'handles case variations' do
-      expect(router.send(:parse_intent, 'NEW_TASK')).to eq(Looped::Types::Intent::NewTask)
-      expect(router.send(:parse_intent, 'Follow_Up')).to eq(Looped::Types::Intent::FollowUp)
+      expect(router.send(:normalize_intent, 'NEW_TASK')).to eq(Looped::Types::Intent::NewTask)
+      expect(router.send(:normalize_intent, 'Follow_Up')).to eq(Looped::Types::Intent::FollowUp)
     end
   end
 end

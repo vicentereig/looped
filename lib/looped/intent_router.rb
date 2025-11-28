@@ -102,7 +102,7 @@ module Looped
       )
 
       Types::IntentClassification.new(
-        intent: parse_intent(result.intent),
+        intent: normalize_intent(result.intent),
         resolved_task: result.resolved_task || input,
         suggestion_index: result.suggestion_index,
         confidence: (result.confidence || 0.5).to_f,
@@ -110,9 +110,12 @@ module Looped
       )
     end
 
-    sig { params(intent_str: String).returns(Types::Intent) }
-    def parse_intent(intent_str)
-      case intent_str.to_s.downcase.strip
+    sig { params(intent: T.any(Types::Intent, String)).returns(Types::Intent) }
+    def normalize_intent(intent)
+      # DSPy returns the enum directly, but handle string fallback for safety
+      return intent if intent.is_a?(Types::Intent)
+
+      case intent.to_s.downcase.strip
       when 'new_task' then Types::Intent::NewTask
       when 'follow_up' then Types::Intent::FollowUp
       when 'select_suggestion' then Types::Intent::SelectSuggestion
