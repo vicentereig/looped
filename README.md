@@ -5,6 +5,118 @@ A self-improving coding agent that learns from its own performance.
 [![Gem Version](https://img.shields.io/gem/v/looped)](https://rubygems.org/gems/looped)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/vicentereig/looped/ruby.yml?branch=main)](https://github.com/vicentereig/looped/actions)
 
+```
+                           ┌─────────────────────────────────────┐
+                           │         YOU / YOUR APP              │
+                           │   "Write a fibonacci function"      │
+                           └──────────────┬──────────────────────┘
+                                          │
+                                          ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                              LOOPED::AGENT                                   │
+│  ┌────────────────────────────────────────────────────────────────────────┐  │
+│  │                         ReAct Loop (Think → Act → Observe)             │  │
+│  │                                                                        │  │
+│  │  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐              │  │
+│  │  │    THINK     │───▶│     ACT      │───▶│   OBSERVE    │──┐           │  │
+│  │  │  Plan next   │    │  Use tools   │    │   Process    │  │           │  │
+│  │  │    step      │    │              │    │   results    │  │           │  │
+│  │  └──────────────┘    └──────────────┘    └──────────────┘  │           │  │
+│  │         ▲                                                   │           │  │
+│  │         └───────────────────────────────────────────────────┘           │  │
+│  │                        (repeat until solved)                            │  │
+│  └────────────────────────────────────────────────────────────────────────┘  │
+│                                                                              │
+│  Tools: read_file │ write_file │ search_code │ run_command                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+                                          │
+                                          ▼ solution
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                              LOOPED::JUDGE                                   │
+│                                                                              │
+│   Evaluates: Correctness • Code Quality • Best Practices                     │
+│   Returns:   Score (0-10) • Pass/Fail • Critique • Suggestions               │
+└──────────────────────────────────────────────────────────────────────────────┘
+                                          │
+                       ┌──────────────────┴──────────────────┐
+                       │                                     │
+                       ▼                                     ▼
+              ┌────────────────┐                    ┌────────────────────┐
+              │  Return to     │                    │  Persist Result    │
+              │  User/App      │                    │  to Training       │
+              │  with score    │                    │  Buffer            │
+              └────────────────┘                    └─────────┬──────────┘
+                                                              │
+┌─────────────────────────────────────────────────────────────┼────────────────┐
+│                          ~/.looped/                         │                │
+│                                                             ▼                │
+│  instructions.json ◀──────────────────────┐    training_buffer.json         │
+│  (current best prompts)                   │    (recent results)              │
+│                                           │           │                      │
+│  history/                                 │           │ when buffer >= 5     │
+│  (archived training data)                 │           ▼                      │
+│                                    ┌──────┴───────────────────────┐          │
+│                                    │     LOOPED::OPTIMIZER        │          │
+│                                    │     (Background Async)       │          │
+│                                    │                              │          │
+│                                    │  1. Build training examples  │          │
+│                                    │  2. Run GEPA optimization    │          │
+│                                    │  3. Extract better prompts   │          │
+│                                    │  4. Hot-swap instructions    │          │
+│                                    └──────────────────────────────┘          │
+└──────────────────────────────────────────────────────────────────────────────┘
+                                          │
+                                          │ Agent detects file change
+                                          │ and hot-reloads improved
+                                          ▼ instructions automatically
+                              ┌─────────────────────────┐
+                              │  Next task benefits     │
+                              │  from learned prompts   │
+                              └─────────────────────────┘
+```
+
+## Why Looped?
+
+**The Problem:** LLM-based coding agents use static prompts. When they fail or produce suboptimal code, there's no mechanism to learn from those mistakes. You're stuck manually tweaking prompts.
+
+**The Solution:** Looped creates a feedback loop where the agent:
+1. Attempts coding tasks using ReAct (Reasoning + Acting)
+2. Gets scored by an LLM judge on correctness, quality, and best practices
+3. Stores results as training data
+4. Automatically optimizes its own prompts using GEPA (Genetic Evolution of Prompt Attributes)
+5. Hot-swaps improved prompts without restart
+
+**The Outcome:** An agent that gets measurably better at coding tasks over time, with improvements persisted across sessions.
+
+## Benefits
+
+| Benefit | Description |
+|---------|-------------|
+| **Self-Improving** | Automatically learns from successes and failures—no manual prompt engineering |
+| **Measurable Progress** | Every solution is scored; track improvement over generations |
+| **Persistent Learning** | Optimized prompts saved to disk; improvements survive restarts |
+| **Zero Configuration** | Works out of the box; optimization runs transparently in background |
+| **Multi-Model Support** | Use OpenAI, Anthropic, or Google models for any component |
+
+## Expected Outcomes
+
+When you use Looped over time:
+
+1. **Generation 0 (Initial):** Agent uses default DSPy.rb ReAct prompts
+2. **After ~5 tasks:** First optimization cycle runs, prompts refined based on judge feedback
+3. **After ~20 tasks:** Multiple optimization generations; agent develops task-specific reasoning patterns
+4. **Ongoing:** Continuous improvement as more diverse tasks provide richer training signal
+
+Check progress anytime with the `status` command:
+```
+looped> status
+=== Optimization Status ===
+Generation: 3
+Best Score: 8.7/10
+Training Buffer: 2/5 results
+Last Updated: 2024-11-28 12:30:00
+```
+
 ## Overview
 
 **Looped** is a Ruby gem that creates a coding agent capable of:
@@ -13,37 +125,6 @@ A self-improving coding agent that learns from its own performance.
 2. **Evaluating its own work** with an LLM-as-judge that scores solutions
 3. **Continuously improving** by optimizing prompts with GEPA running in the background
 4. **Persisting learning** to disk (`~/.looped/`) for cross-session improvement
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Foreground                               │
-│  ┌───────────────────────────────────────────────────────────┐ │
-│  │                   Looped::Agent                           │ │
-│  │  - Loads current best instructions from disk              │ │
-│  │  - Handles coding tasks with DSPy::ReAct + tools          │ │
-│  │  - Writes results to training buffer                      │ │
-│  └───────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼ writes
-┌─────────────────────────────────────────────────────────────────┐
-│                         ~/.looped/                              │
-│  ├── instructions.json      # Current best instructions         │
-│  ├── training_buffer.json   # Recent task results for learning  │
-│  └── history/               # Historical training data          │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▲ reads/updates
-┌─────────────────────────────────────────────────────────────────┐
-│                     Background (Async Task)                     │
-│  ┌───────────────────────────────────────────────────────────┐ │
-│  │                  Looped::Optimizer                        │ │
-│  │  - Monitors training buffer for new results               │ │
-│  │  - Runs GEPA reflection cycles when buffer has data       │ │
-│  │  - Hot-swaps instructions.json when improvement found     │ │
-│  └───────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘
-```
 
 ## Installation
 
