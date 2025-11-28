@@ -96,7 +96,7 @@ A self-improving coding agent that learns from its own performance.
 | **Measurable Progress** | Every solution is scored; track improvement over generations |
 | **Persistent Learning** | Optimized prompts saved to disk; improvements survive restarts |
 | **Zero Configuration** | Works out of the box; optimization runs transparently in background |
-| **Multi-Model Support** | Use OpenAI, Anthropic, or Google models for any component |
+| **Flexible Models** | Use different OpenAI models for agent, judge, and optimizer |
 
 ## Expected Outcomes
 
@@ -253,30 +253,19 @@ Interactive Commands:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `OPENAI_API_KEY` | OpenAI API key | (required for openai/* models) |
-| `ANTHROPIC_API_KEY` | Anthropic API key | (for anthropic/* models) |
-| `GEMINI_API_KEY` | Google API key | (for gemini/* models) |
+| `OPENAI_API_KEY` | OpenAI API key | (required) |
 | `LOOPED_MODEL` | Default agent model | `openai/gpt-4o-mini` |
 | `LOOPED_JUDGE_MODEL` | Default judge model | `openai/gpt-4o-mini` |
 | `LOOPED_STORAGE_DIR` | Storage directory | `~/.looped` |
 
 ### Supported Models
 
-Any model supported by DSPy.rb:
+Currently supports OpenAI models via `dspy-openai`:
 
 ```ruby
-# OpenAI
 'openai/gpt-4o'
 'openai/gpt-4o-mini'
 'openai/o3-mini'
-
-# Anthropic
-'anthropic/claude-sonnet-4-5-20250929'
-'anthropic/claude-3-5-haiku-20241022'
-
-# Google
-'gemini/gemini-2.5-pro'
-'gemini/gemini-2.0-flash'
 ```
 
 ## How It Works
