@@ -4,7 +4,8 @@ require 'bundler/setup'
 
 # Load environment before anything else
 require 'dotenv'
-Dotenv.load(File.expand_path('../../.env', __FILE__))
+env_file = File.expand_path('../.env', __dir__)
+Dotenv.load(env_file) if File.exist?(env_file)
 
 # Debug: ensure API key is loaded
 unless ENV['OPENAI_API_KEY']

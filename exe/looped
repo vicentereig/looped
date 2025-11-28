@@ -1,6 +1,118 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'optparse'
 require 'looped'
 
-Looped.run
+options = {}
+
+parser = OptionParser.new do |opts|
+  opts.banner = <<~BANNER
+    Looped - Self-improving coding agent powered by DSPy.rb + GEPA
+
+    Usage: looped [options] [task]
+
+    If no task is provided, starts interactive mode.
+
+  BANNER
+
+  opts.separator 'Options:'
+
+  opts.on('-m', '--model MODEL', 'Agent model (default: openai/gpt-4o-mini)') do |model|
+    options[:model] = model
+  end
+
+  opts.on('-j', '--judge-model MODEL', 'Judge model for evaluation') do |model|
+    options[:judge_model] = model
+  end
+
+  opts.on('-r', '--reflection-model MODEL', 'GEPA reflection model') do |model|
+    options[:reflection_model] = model
+  end
+
+  opts.on('-i', '--max-iterations N', Integer, 'Max ReAct iterations (default: 10)') do |n|
+    options[:max_iterations] = n
+  end
+
+  opts.on('-c', '--context FILE', 'Load context from file') do |file|
+    options[:context_file] = file
+  end
+
+  opts.on('--no-optimizer', 'Disable background optimizer') do
+    options[:no_optimizer] = true
+  end
+
+  opts.on('-v', '--version', 'Show version') do
+    puts "looped #{Looped::VERSION}"
+    exit
+  end
+
+  opts.on('-h', '--help', 'Show this help message') do
+    puts opts
+    exit
+  end
+
+  opts.separator ''
+  opts.separator 'Environment Variables:'
+  opts.separator '  OPENAI_API_KEY          OpenAI API key (required for openai/* models)'
+  opts.separator '  ANTHROPIC_API_KEY       Anthropic API key (for anthropic/* models)'
+  opts.separator '  GEMINI_API_KEY          Google API key (for gemini/* models)'
+  opts.separator '  LOOPED_MODEL            Default agent model'
+  opts.separator '  LOOPED_JUDGE_MODEL      Default judge model'
+  opts.separator '  LOOPED_STORAGE_DIR      Storage directory (default: ~/.looped)'
+  opts.separator ''
+  opts.separator 'Examples:'
+  opts.separator '  looped                           # Interactive mode'
+  opts.separator '  looped "Write a fibonacci function in Ruby"'
+  opts.separator '  looped -m openai/gpt-4o "Fix the bug in main.rb"'
+  opts.separator '  looped -c project_context.md "Add unit tests"'
+  opts.separator ''
+end
+
+begin
+  parser.parse!
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
+  puts "Error: #{e.message}"
+  puts ''
+  puts parser
+  exit 1
+end
+
+# Load context from file if specified
+context = ''
+if options[:context_file]
+  unless File.exist?(options[:context_file])
+    puts "Error: Context file not found: #{options[:context_file]}"
+    exit 1
+  end
+  context = File.read(options[:context_file])
+end
+
+# If a task is provided as argument, run single task mode
+if ARGV.any?
+  task = ARGV.join(' ')
+  result = Looped.execute(
+    task: task,
+    context: context,
+    model: options[:model],
+    judge_model: options[:judge_model],
+    max_iterations: options[:max_iterations] || 10
+  )
+
+  puts "Score: #{result.score.round(2)}/10"
+  puts ''
+  puts 'Solution:'
+  puts result.solution
+  puts ''
+  puts 'Feedback:'
+  puts result.feedback
+  exit(result.score >= 7.0 ? 0 : 1)
+end
+
+# Interactive mode
+Looped.run(
+  model: options[:model],
+  judge_model: options[:judge_model],
+  reflection_model: options[:reflection_model],
+  max_iterations: options[:max_iterations] || 10
+)

@@ -34,6 +34,9 @@ module Looped
 
       # Build the ReAct agent with tools
       @react = T.let(build_react_agent, DSPy::ReAct)
+
+      # Load any existing instructions
+      maybe_reload_instructions
     end
 
     sig { params(task: String, context: String).returns(Types::TrainingResult) }
