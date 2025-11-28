@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'open3'
-require 'timeout'
 
 module Looped
   module Tools
@@ -17,15 +16,40 @@ module Looped
       sig { params(command: String, timeout: Integer).returns(String) }
       def call(command:, timeout: DEFAULT_TIMEOUT)
         # TODO: Implement Docker sandbox via trusted-sandbox gem for production
-        # For now, basic execution with timeout
-        Timeout.timeout(timeout) do
-          output, status = Open3.capture2e(command)
-          "Exit code: #{status.exitstatus}\n#{output}"
+        pid = T.let(nil, T.nilable(Integer))
+        output = +''
+
+        begin
+          stdin, stdout_err, wait_thr = Open3.popen2e(command)
+          pid = wait_thr.pid
+          stdin.close
+
+          # Wait for process with timeout using a thread
+          reader = Thread.new { stdout_err.read }
+
+          if wait_thr.join(timeout)
+            # Process completed in time
+            output = reader.value
+            exit_status = wait_thr.value
+            "Exit code: #{exit_status.exitstatus}\n#{output}"
+          else
+            # Timeout - kill the process
+            reader.kill
+            Process.kill('TERM', pid)
+            sleep 0.1
+            begin
+              Process.kill('KILL', pid) if wait_thr.alive?
+            rescue Errno::ESRCH
+              # Process already dead
+            end
+            wait_thr.join
+            "Error: Command timed out after #{timeout} seconds"
+          end
+        rescue StandardError => e
+          "Error: #{e.message}"
+        ensure
+          stdout_err&.close rescue nil
         end
-      rescue Timeout::Error
-        "Error: Command timed out after #{timeout} seconds"
-      rescue StandardError => e
-        "Error: #{e.message}"
       end
     end
   end
