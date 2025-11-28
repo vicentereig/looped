@@ -34,3 +34,8 @@ Thumbs.db
 /.looped/
 add_two_numbers.rb
 log/
+
+# Generated test files
+agent_structure_description.txt
+factorial.rb
+functions_summary.txt
