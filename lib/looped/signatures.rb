@@ -27,7 +27,7 @@ module Looped
     input do
       const :task, String, description: 'The original task that was attempted'
       const :solution, String, description: 'The solution to evaluate'
-      const :expected_behavior, String, description: 'What the solution should accomplish'
+      const :expected_behavior, T.nilable(String), default: nil, description: 'What the solution should accomplish'
     end
 
     output do
