@@ -17,6 +17,12 @@ module Looped
     sig { returns(State) }
     attr_reader :state
 
+    sig { returns(ConversationMemory) }
+    attr_reader :conversation_memory
+
+    sig { returns(IntentRouter) }
+    attr_reader :intent_router
+
     sig do
       params(
         model: T.nilable(String),
@@ -53,7 +59,10 @@ module Looped
         ),
         Optimizer
       )
+      @conversation_memory = T.let(ConversationMemory.new, ConversationMemory)
+      @intent_router = T.let(IntentRouter.new(model: model), IntentRouter)
       @running = T.let(false, T::Boolean)
+      @current_context = T.let(nil, T.nilable(String))
     end
 
     sig { void }
@@ -62,7 +71,10 @@ module Looped
 
       puts banner
       puts "Type a coding task and press Enter. Type 'quit' to exit."
-      puts "Type 'status' to see optimization status."
+      puts "Type 'status' to see optimization status, 'conversation' for history."
+      if @conversation_memory.turn_count > 0
+        puts "Restored #{@conversation_memory.turn_count} conversation turn(s) from previous session."
+      end
       puts ""
 
       Async do |task|
@@ -118,12 +130,16 @@ module Looped
         show_status
       when 'history'
         show_history
+      when 'conversation'
+        show_conversation
+      when 'clear'
+        clear_conversation
       when 'help'
         show_help
       when /^context\s+(.+)/i
         set_context(T.must($1))
       else
-        execute_task(input)
+        process_with_intent(input)
       end
     end
 
@@ -177,11 +193,19 @@ module Looped
 
         === Looped Commands ===
 
-        <task>     Execute a coding task
-        status     Show optimization status
-        history    Show recent task history
-        help       Show this help message
-        quit       Exit the application
+        <task>       Execute a coding task
+        <number>     Execute suggestion #N from previous response
+        status       Show optimization status
+        history      Show recent task history (training buffer)
+        conversation Show conversation history
+        clear        Clear conversation history
+        help         Show this help message
+        quit         Exit the application
+
+        === Tips ===
+
+        After getting suggestions, type a number (1, 2, 3) to implement that suggestion.
+        You can also say "go for 1", "option 2", "the first one", etc.
 
         === Environment Variables ===
 
@@ -198,15 +222,49 @@ module Looped
       puts "\nContext set to: #{context}\n"
     end
 
-    sig { params(task: String).void }
-    def execute_task(task)
-      puts "\nExecuting task..."
+    sig { params(input: String).void }
+    def process_with_intent(input)
+      context = @conversation_memory.to_context
+
+      # Classify intent
+      classification = @intent_router.classify(input: input, context: context)
+
+      puts ""
+      puts "[Intent: #{classification.intent.serialize}] #{classification.reasoning}"
+      puts ""
+
+      # Execute the resolved task
+      execute_resolved_task(
+        original_input: input,
+        resolved_task: classification.resolved_task,
+        include_previous_context: classification.intent == Types::Intent::FollowUp
+      )
+    end
+
+    sig { params(original_input: String, resolved_task: String, include_previous_context: T::Boolean).void }
+    def execute_resolved_task(original_input:, resolved_task:, include_previous_context: false)
+      puts "Executing: #{resolved_task.truncate(80)}"
       puts ""
 
       context = @current_context || ''
 
+      # For follow-ups, include previous solution context
+      if include_previous_context && @conversation_memory.last_turn
+        context = "#{context}\n\nPrevious solution:\n#{@conversation_memory.last_turn.solution}"
+      end
+
       begin
-        result = @agent.run(task: task, context: context)
+        result = @agent.run(task: resolved_task, context: context)
+
+        # Store in conversation memory
+        @conversation_memory.add_turn(
+          task: original_input,
+          resolved_task: resolved_task,
+          solution: result.solution,
+          score: result.score,
+          suggestions: extract_suggestions(result.feedback),
+          judgment: @agent.last_judgment
+        )
 
         puts "=== Result ==="
         puts ""
@@ -217,12 +275,69 @@ module Looped
         puts ""
         puts "Feedback:"
         puts result.feedback
-        puts ""
+
+        # Display numbered suggestions
+        display_suggestions
       rescue StandardError => e
         puts "Error: #{e.message}"
         puts e.backtrace&.first(5)&.join("\n")
         puts ""
       end
+    end
+
+    sig { void }
+    def display_suggestions
+      suggestions = @conversation_memory.current_suggestions
+      return if suggestions.empty?
+
+      puts ""
+      puts "Suggestions for improvement:"
+      suggestions.each_with_index do |suggestion, i|
+        puts "  #{i + 1}. #{suggestion}"
+      end
+      puts ""
+      puts "(Type a number to implement a suggestion)"
+      puts ""
+    end
+
+    sig { params(feedback: String).returns(T::Array[String]) }
+    def extract_suggestions(feedback)
+      # If we have a judgment with suggestions, use those
+      return @agent.last_judgment.suggestions if @agent.last_judgment&.suggestions&.any?
+
+      # Otherwise try to parse from feedback text
+      []
+    end
+
+    sig { void }
+    def show_conversation
+      if @conversation_memory.turn_count == 0
+        puts "\nNo conversation history yet.\n"
+        return
+      end
+
+      puts ""
+      puts "=== Conversation History ==="
+      puts ""
+
+      @conversation_memory.turns.each do |turn|
+        puts "Turn #{turn.turn_number}:"
+        puts "  Input: #{turn.task.truncate(60)}"
+        if turn.task != turn.resolved_task
+          puts "  Resolved: #{turn.resolved_task.truncate(60)}"
+        end
+        puts "  Score: #{turn.score.round(2)}/10"
+        if turn.suggestions.any?
+          puts "  Suggestions: #{turn.suggestions.length} available"
+        end
+        puts ""
+      end
+    end
+
+    sig { void }
+    def clear_conversation
+      @conversation_memory.clear
+      puts "\nConversation history cleared.\n"
     end
 
     sig { returns(String) }

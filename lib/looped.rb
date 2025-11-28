@@ -17,6 +17,8 @@ require_relative 'looped/types'
 require_relative 'looped/signatures'
 require_relative 'looped/memory'
 require_relative 'looped/state'
+require_relative 'looped/conversation_memory'
+require_relative 'looped/intent_router'
 
 # Tools
 require_relative 'looped/tools/read_file'

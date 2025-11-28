@@ -23,6 +23,9 @@ module Looped
     sig { returns(T.nilable(String)) }
     attr_reader :instructions_mtime
 
+    sig { returns(T.nilable(Types::Judgment)) }
+    attr_reader :last_judgment
+
     sig { params(model: T.nilable(String), max_iterations: Integer, judge_model: T.nilable(String)).void }
     def initialize(model: nil, max_iterations: DEFAULT_MAX_ITERATIONS, judge_model: nil)
       @model_id = T.let(model || ENV.fetch('LOOPED_MODEL', DEFAULT_MODEL), String)
@@ -31,6 +34,7 @@ module Looped
       @state = T.let(State.new, State)
       @judge = T.let(Judge.new(model: judge_model), Judge)
       @instructions_mtime = T.let(nil, T.nilable(String))
+      @last_judgment = T.let(nil, T.nilable(Types::Judgment))
 
       # Build the ReAct agent with tools
       @react = T.let(build_react_agent, DSPy::ReAct)
@@ -52,6 +56,7 @@ module Looped
 
       # Judge the result
       judgment = @judge.evaluate(task: task, solution: result[:solution])
+      @last_judgment = judgment
 
       # Create training result
       training_result = Types::TrainingResult.new(

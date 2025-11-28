@@ -49,5 +49,42 @@ module Looped
       const :critique, String
       const :suggestions, T::Array[String], default: []
     end
+
+    # Intent classification for user input routing
+    class Intent < T::Enum
+      enums do
+        NewTask = new('new_task')
+        FollowUp = new('follow_up')
+        SelectSuggestion = new('select_suggestion')
+      end
+    end
+
+    # Rich conversation turn for storage/persistence
+    class ConversationTurn < T::Struct
+      const :task, String                              # Original user input
+      const :resolved_task, String                     # Task after intent resolution
+      const :solution, String
+      const :score, Float
+      const :suggestions, T::Array[String], default: []
+      const :judgment, T.nilable(Judgment)
+      const :timestamp, String
+      const :turn_number, Integer
+    end
+
+    # Lean context for LLM prompts
+    class ConversationContext < T::Struct
+      const :previous_task, T.nilable(String)
+      const :previous_solution_summary, T.nilable(String)
+      const :available_suggestions, T::Array[String], default: []
+    end
+
+    # Result of intent classification
+    class IntentClassification < T::Struct
+      const :intent, Intent
+      const :resolved_task, String
+      const :suggestion_index, T.nilable(Integer)
+      const :confidence, Float
+      const :reasoning, String
+    end
   end
 end

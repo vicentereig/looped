@@ -1,0 +1,935 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"user_input\": {\n      \"type\": \"string\"\n    },\n    \"previous_task\":
+        {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"previous_solution_summary\":
+        {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"available_suggestions\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\":
+        [\n    \"user_input\"\n  ]\n}\n```\nYour output schema fields are:\n```json\n{\n  \"$schema\":
+        \"http://json-schema.org/draft-06/schema#\",\n  \"type\": \"object\",\n  \"properties\":
+        {\n    \"intent\": {\n      \"type\": \"string\"\n    },\n    \"resolved_task\":
+        {\n      \"type\": \"string\"\n    },\n    \"suggestion_index\": {\n      \"type\":
+        [\n        \"integer\",\n        \"null\"\n      ]\n    },\n    \"confidence\":
+        {\n      \"type\": \"number\"\n    },\n    \"reasoning\": {\n      \"type\":
+        \"string\"\n    }\n  },\n  \"required\": [\n    \"intent\",\n    \"resolved_task\",\n    \"suggestion_index\",\n    \"confidence\",\n    \"reasoning\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Classify user input and resolve it to an executable task."},{"role":"user","content":"##
+        Input Values\n```json\n{\n  \"user_input\": \"Write a hello world function\",\n  \"previous_task\":
+        null,\n  \"previous_solution_summary\": null,\n  \"available_suggestions\":
+        []\n}\n```\n\nRespond with the corresponding output schema fields wrapped
+        in a ```json ``` block,\nstarting with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '2062'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:06:49 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2537'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2550'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9995'
+      X-Ratelimit-Remaining-Tokens:
+      - '199560'
+      X-Ratelimit-Reset-Requests:
+      - 41.797s
+      X-Ratelimit-Reset-Tokens:
+      - 132ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd4c3def3ed71-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgzxvKfP7IGgjCUWRRPa1TDDTIocs",
+          "object": "chat.completion",
+          "created": 1764364007,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"intent\": \"code_generation\",\n  \"resolved_task\": \"Create a hello world function in a programming language\",\n  \"suggestion_index\": null,\n  \"confidence\": 0.95,\n  \"reasoning\": \"The user input clearly requests to write a 'hello world' function, indicating an intention to perform a coding task.\"\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 463,
+            "completion_tokens": 80,
+            "total_tokens": 543,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b547601dbd"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:06:49 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts and actions, including observations from tools.\"\n    },\n    \"available_tools\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\":
+        {\n          \"_type\": {\n            \"type\": \"string\",\n            \"const\":
+        \"AvailableTool\"\n          },\n          \"name\": {\n            \"type\":
+        \"string\"\n          },\n          \"description\": {\n            \"type\":
+        \"string\"\n          },\n          \"schema\": {\n            \"type\": \"object\",\n            \"propertyNames\":
+        {\n              \"type\": \"string\"\n            },\n            \"additionalProperties\":
+        {\n              \"type\": \"string\"\n            },\n            \"description\":
+        \"A mapping where keys are strings and values are strings\"\n          }\n        },\n        \"required\":
+        [\n          \"_type\",\n          \"name\",\n          \"description\",\n          \"schema\"\n        ],\n        \"description\":
+        \"DSPy::ReAct::AvailableTool struct\"\n      },\n      \"description\": \"Array
+        of available tools with their JSON schemas.\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"available_tools\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"thought\": {\n      \"type\": \"string\",\n      \"description\":
+        \"Reasoning about what to do next, considering the history and observations.\"\n    },\n    \"action\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"read_file\",\n        \"write_file\",\n        \"search_code\",\n        \"run_command\",\n        \"finish\"\n      ],\n      \"description\":
+        \"The action to take. MUST be one of the tool names listed in `available_tools`
+        input, or the literal string \\\"finish\\\" to provide the final answer.\"\n    },\n    \"action_input\":
+        {\n      \"type\": \"string\",\n      \"description\": \"Input for the chosen
+        action. If action is a tool name, this MUST be a JSON object matching the
+        tool''s schema. If action is \\\"finish\\\", this field MUST contain the final
+        result based on processing the input data.\"\n    }\n  },\n  \"required\":
+        [\n    \"thought\",\n    \"action\",\n    \"action_input\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Generate a thought about what to do next to process the given
+        inputs."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"Create a hello world
+        function in a programming language\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [],\n  \"available_tools\": [\n    {\n      \"name\": \"read_file\",\n      \"description\":
+        \"Read contents of a file at the given path\",\n      \"schema\": {\n        \"name\":
+        \"read_file\",\n        \"description\": \"Read contents of a file at the
+        given path\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"path\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter path\"\n            }\n          },\n          \"required\": [\n            \"path\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"write_file\",\n      \"description\": \"Write content to a file at the given
+        path. Creates parent directories if needed.\",\n      \"schema\": {\n        \"name\":
+        \"write_file\",\n        \"description\": \"Write content to a file at the
+        given path. Creates parent directories if needed.\",\n        \"parameters\":
+        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"path\":
+        {\n              \"type\": \"string\",\n              \"description\": \"Parameter
+        path\"\n            },\n            \"content\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter content\"\n            }\n          },\n          \"required\":
+        [\n            \"path\",\n            \"content\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"search_code\",\n      \"description\": \"Search for a pattern in code files
+        using ripgrep. Returns matching lines with file paths and line numbers.\",\n      \"schema\":
+        {\n        \"name\": \"search_code\",\n        \"description\": \"Search for
+        a pattern in code files using ripgrep. Returns matching lines with file paths
+        and line numbers.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"pattern\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter pattern\"\n            },\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path (optional)\"\n            },\n            \"file_type\":
+        {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ],\n              \"description\":
+        \"Parameter file_type (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"pattern\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"run_command\",\n      \"description\": \"Execute a shell command and return
+        its output. Use for running tests, linters, or other development tools.\",\n      \"schema\":
+        {\n        \"name\": \"run_command\",\n        \"description\": \"Execute
+        a shell command and return its output. Use for running tests, linters, or
+        other development tools.\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"command\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter command\"\n            },\n            \"timeout\":
+        {\n              \"type\": \"integer\",\n              \"description\": \"Parameter
+        timeout (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"command\"\n          ]\n        }\n      }\n    }\n  ]\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '8537'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:06:53 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2961'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2975'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9994'
+      X-Ratelimit-Remaining-Tokens:
+      - '198093'
+      X-Ratelimit-Reset-Requests:
+      - 47.399s
+      X-Ratelimit-Reset-Tokens:
+      - 572ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd4d6ebbced71-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgzxyHC0v5kETJO8oEXQAanOE6nxf",
+          "object": "chat.completion",
+          "created": 1764364010,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"thought\": \"I need to create a 'hello world' function in a programming language. To proceed, I will write the function to a file. Therefore, I need to decide on the file path and the content of the file that includes the function.\",\n  \"action\": \"write_file\",\n  \"action_input\": {\n    \"path\": \"hello_world.py\",\n    \"content\": \"def hello_world():\\n    print('Hello, World!')\"\n  }\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1633,
+            "completion_tokens": 108,
+            "total_tokens": 1741,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:06:53 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts, actions, and observations.\"\n    },\n    \"observation\": {\n      \"type\":
+        \"string\",\n      \"description\": \"The result from the last action\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"observation\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"interpretation\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Interpretation of the observation\"\n    },\n    \"next_step\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"continue\",\n        \"finish\"\n      ],\n      \"description\":
+        \"What to do next: ''#<DSPy::NextStep::Continue>'' or ''#<DSPy::NextStep::Finish>''\"\n    }\n  },\n  \"required\":
+        [\n    \"interpretation\",\n    \"next_step\"\n  ]\n}\n```\n\nAll interactions
+        will be structured in the following way, with the appropriate values filled
+        in.\n## Input values\n```json\n{input_values}\n```\n## Output values\nRespond
+        exclusively with the output schema fields in the json block below.\n```json\n{output_values}\n```\n\nIn
+        adhering to this structure, your objective is: Process the observation from
+        a tool and decide what to do next."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"Create a hello world
+        function in a programming language\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [\n    {\n      \"step\": 1,\n      \"thought\": \"I need to create a ''hello
+        world'' function in a programming language. To proceed, I will write the function
+        to a file. Therefore, I need to decide on the file path and the content of
+        the file that includes the function.\",\n      \"action\": \"write_file\",\n      \"action_input\":
+        {\n        \"path\": \"hello_world.py\",\n        \"content\": \"def hello_world():\\n    print(''Hello,
+        World!'')\"\n      },\n      \"observation\": \"Successfully wrote 45 bytes
+        to hello_world.py\"\n    }\n  ],\n  \"observation\": \"Successfully wrote
+        45 bytes to hello_world.py\"\n}\n```\n\nRespond with the corresponding output
+        schema fields wrapped in a ```json ``` block,\nstarting with the heading `##
+        Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '4403'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:06:54 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1007'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '1029'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9993'
+      X-Ratelimit-Remaining-Tokens:
+      - '199026'
+      X-Ratelimit-Reset-Requests:
+      - 52.942s
+      X-Ratelimit-Reset-Tokens:
+      - 292ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd4ea2dc5ed71-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-Cgzy1uHOF7SKN44EF2oQSs1eyEvrg",
+          "object": "chat.completion",
+          "created": 1764364013,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"interpretation\": \"The 'hello world' function has been successfully written to the file without any issues.\",\n  \"next_step\": \"finish\"\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 888,
+            "completion_tokens": 41,
+            "total_tokens": 929,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:06:54 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts and actions, including observations from tools.\"\n    },\n    \"available_tools\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\":
+        {\n          \"_type\": {\n            \"type\": \"string\",\n            \"const\":
+        \"AvailableTool\"\n          },\n          \"name\": {\n            \"type\":
+        \"string\"\n          },\n          \"description\": {\n            \"type\":
+        \"string\"\n          },\n          \"schema\": {\n            \"type\": \"object\",\n            \"propertyNames\":
+        {\n              \"type\": \"string\"\n            },\n            \"additionalProperties\":
+        {\n              \"type\": \"string\"\n            },\n            \"description\":
+        \"A mapping where keys are strings and values are strings\"\n          }\n        },\n        \"required\":
+        [\n          \"_type\",\n          \"name\",\n          \"description\",\n          \"schema\"\n        ],\n        \"description\":
+        \"DSPy::ReAct::AvailableTool struct\"\n      },\n      \"description\": \"Array
+        of available tools with their JSON schemas.\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"available_tools\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"thought\": {\n      \"type\": \"string\",\n      \"description\":
+        \"Reasoning about what to do next, considering the history and observations.\"\n    },\n    \"action\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"read_file\",\n        \"write_file\",\n        \"search_code\",\n        \"run_command\",\n        \"finish\"\n      ],\n      \"description\":
+        \"The action to take. MUST be one of the tool names listed in `available_tools`
+        input, or the literal string \\\"finish\\\" to provide the final answer.\"\n    },\n    \"action_input\":
+        {\n      \"type\": \"string\",\n      \"description\": \"Input for the chosen
+        action. If action is a tool name, this MUST be a JSON object matching the
+        tool''s schema. If action is \\\"finish\\\", this field MUST contain the final
+        result based on processing the input data.\"\n    }\n  },\n  \"required\":
+        [\n    \"thought\",\n    \"action\",\n    \"action_input\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Generate a thought about what to do next to process the given
+        inputs."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"Create a hello world
+        function in a programming language\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [\n    {\n      \"step\": 1,\n      \"thought\": \"I need to create a ''hello
+        world'' function in a programming language. To proceed, I will write the function
+        to a file. Therefore, I need to decide on the file path and the content of
+        the file that includes the function.\",\n      \"action\": \"write_file\",\n      \"action_input\":
+        {\n        \"path\": \"hello_world.py\",\n        \"content\": \"def hello_world():\\n    print(''Hello,
+        World!'')\"\n      },\n      \"observation\": \"Successfully wrote 45 bytes
+        to hello_world.py\"\n    }\n  ],\n  \"available_tools\": [\n    {\n      \"name\":
+        \"read_file\",\n      \"description\": \"Read contents of a file at the given
+        path\",\n      \"schema\": {\n        \"name\": \"read_file\",\n        \"description\":
+        \"Read contents of a file at the given path\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path\"\n            }\n          },\n          \"required\":
+        [\n            \"path\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"write_file\",\n      \"description\": \"Write content to a file at the given
+        path. Creates parent directories if needed.\",\n      \"schema\": {\n        \"name\":
+        \"write_file\",\n        \"description\": \"Write content to a file at the
+        given path. Creates parent directories if needed.\",\n        \"parameters\":
+        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"path\":
+        {\n              \"type\": \"string\",\n              \"description\": \"Parameter
+        path\"\n            },\n            \"content\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter content\"\n            }\n          },\n          \"required\":
+        [\n            \"path\",\n            \"content\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"search_code\",\n      \"description\": \"Search for a pattern in code files
+        using ripgrep. Returns matching lines with file paths and line numbers.\",\n      \"schema\":
+        {\n        \"name\": \"search_code\",\n        \"description\": \"Search for
+        a pattern in code files using ripgrep. Returns matching lines with file paths
+        and line numbers.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"pattern\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter pattern\"\n            },\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path (optional)\"\n            },\n            \"file_type\":
+        {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ],\n              \"description\":
+        \"Parameter file_type (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"pattern\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"run_command\",\n      \"description\": \"Execute a shell command and return
+        its output. Use for running tests, linters, or other development tools.\",\n      \"schema\":
+        {\n        \"name\": \"run_command\",\n        \"description\": \"Execute
+        a shell command and return its output. Use for running tests, linters, or
+        other development tools.\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"command\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter command\"\n            },\n            \"timeout\":
+        {\n              \"type\": \"integer\",\n              \"description\": \"Parameter
+        timeout (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"command\"\n          ]\n        }\n      }\n    }\n  ]\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '9078'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:06:56 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2182'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2318'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9993'
+      X-Ratelimit-Remaining-Tokens:
+      - '197966'
+      X-Ratelimit-Reset-Requests:
+      - 1m0.322s
+      X-Ratelimit-Reset-Tokens:
+      - 610ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd4f14f50ed71-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-Cgzy24z82PTWm1uJjJ5R9QLUWPZNB",
+          "object": "chat.completion",
+          "created": 1764364014,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"thought\": \"Now that I have written the 'hello world' function to a file, the next step is to verify its correctness by running the file. Therefore, I will execute the command to run the Python script.\",\n  \"action\": \"run_command\",\n  \"action_input\": {\n    \"command\": \"python hello_world.py\"\n  }\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1760,
+            "completion_tokens": 82,
+            "total_tokens": 1842,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:06:56 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"task\": {\n      \"type\": \"string\"\n    },\n    \"solution\":
+        {\n      \"type\": \"string\"\n    },\n    \"expected_behavior\": {\n      \"type\":
+        \"string\"\n    }\n  },\n  \"required\": [\n    \"task\",\n    \"solution\",\n    \"expected_behavior\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"score\": {\n      \"type\": \"number\"\n    },\n    \"passed\":
+        {\n      \"type\": \"boolean\"\n    },\n    \"critique\": {\n      \"type\":
+        \"string\"\n    },\n    \"suggestions\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\n    \"score\",\n    \"passed\",\n    \"critique\",\n    \"suggestions\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Evaluate code quality and correctness. Be critical and thorough."},{"role":"user","content":"##
+        Input Values\n```json\n{\n  \"task\": \"Create a hello world function in a
+        programming language\",\n  \"solution\": \"The ''hello world'' function has
+        been successfully written to the file without any issues.\",\n  \"expected_behavior\":
+        \"The solution should correctly and completely address the task: Create a
+        hello world function in a programming language\"\n}\n```\n\nRespond with the
+        corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '1976'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:06:59 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2490'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2505'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9992'
+      X-Ratelimit-Remaining-Tokens:
+      - '199574'
+      X-Ratelimit-Reset-Requests:
+      - 1m6.472s
+      X-Ratelimit-Reset-Tokens:
+      - 127ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd500e838ed71-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-Cgzy51M4s7cl3isWDa5rzfyWSNe8y",
+          "object": "chat.completion",
+          "created": 1764364017,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"score\": 1,\n  \"passed\": false,\n  \"critique\": \"The solution does not provide the actual code for a 'hello world' function. It only states that the function was written to a file, which does not fulfill the requirements of the task. A complete solution should include the code itself.\",\n  \"suggestions\": [\n    \"Provide the actual code for the 'hello world' function in a specific programming language.\",\n    \"Include comments to explain the function if necessary.\",\n    \"Demonstrate how to execute the function and display the expected output.\"\n  ]\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 434,
+            "completion_tokens": 130,
+            "total_tokens": 564,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b547601dbd"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:06:59 GMT
+recorded_with: VCR 6.3.1

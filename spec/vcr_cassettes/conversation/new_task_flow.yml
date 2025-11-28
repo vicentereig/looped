@@ -1,0 +1,1873 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"user_input\": {\n      \"type\": \"string\"\n    },\n    \"previous_task\":
+        {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"previous_solution_summary\":
+        {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"available_suggestions\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\":
+        [\n    \"user_input\"\n  ]\n}\n```\nYour output schema fields are:\n```json\n{\n  \"$schema\":
+        \"http://json-schema.org/draft-06/schema#\",\n  \"type\": \"object\",\n  \"properties\":
+        {\n    \"intent\": {\n      \"type\": \"string\"\n    },\n    \"resolved_task\":
+        {\n      \"type\": \"string\"\n    },\n    \"suggestion_index\": {\n      \"type\":
+        [\n        \"integer\",\n        \"null\"\n      ]\n    },\n    \"confidence\":
+        {\n      \"type\": \"number\"\n    },\n    \"reasoning\": {\n      \"type\":
+        \"string\"\n    }\n  },\n  \"required\": [\n    \"intent\",\n    \"resolved_task\",\n    \"suggestion_index\",\n    \"confidence\",\n    \"reasoning\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Classify user input and resolve it to an executable task."},{"role":"user","content":"##
+        Input Values\n```json\n{\n  \"user_input\": \"Write a function to reverse
+        a string\",\n  \"previous_task\": null,\n  \"previous_solution_summary\":
+        null,\n  \"available_suggestions\": []\n}\n```\n\nRespond with the corresponding
+        output schema fields wrapped in a ```json ``` block,\nstarting with the heading
+        `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '2070'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:08:40 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1721'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '1736'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9976'
+      X-Ratelimit-Remaining-Tokens:
+      - '199558'
+      X-Ratelimit-Reset-Requests:
+      - 3m26.104s
+      X-Ratelimit-Reset-Tokens:
+      - 132ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd7810c8d9608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgzzjDNLiDsv0M9P7WDUfck8uCpgD",
+          "object": "chat.completion",
+          "created": 1764364119,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"intent\": \"create_function\",\n  \"resolved_task\": \"write_function_reverse_string\",\n  \"suggestion_index\": null,\n  \"confidence\": 0.95,\n  \"reasoning\": \"The user is requesting to write a function that performs a specific task, which is to reverse a string.\"\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 465,
+            "completion_tokens": 73,
+            "total_tokens": 538,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b547601dbd"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:08:40 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts and actions, including observations from tools.\"\n    },\n    \"available_tools\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\":
+        {\n          \"_type\": {\n            \"type\": \"string\",\n            \"const\":
+        \"AvailableTool\"\n          },\n          \"name\": {\n            \"type\":
+        \"string\"\n          },\n          \"description\": {\n            \"type\":
+        \"string\"\n          },\n          \"schema\": {\n            \"type\": \"object\",\n            \"propertyNames\":
+        {\n              \"type\": \"string\"\n            },\n            \"additionalProperties\":
+        {\n              \"type\": \"string\"\n            },\n            \"description\":
+        \"A mapping where keys are strings and values are strings\"\n          }\n        },\n        \"required\":
+        [\n          \"_type\",\n          \"name\",\n          \"description\",\n          \"schema\"\n        ],\n        \"description\":
+        \"DSPy::ReAct::AvailableTool struct\"\n      },\n      \"description\": \"Array
+        of available tools with their JSON schemas.\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"available_tools\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"thought\": {\n      \"type\": \"string\",\n      \"description\":
+        \"Reasoning about what to do next, considering the history and observations.\"\n    },\n    \"action\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"read_file\",\n        \"write_file\",\n        \"search_code\",\n        \"run_command\",\n        \"finish\"\n      ],\n      \"description\":
+        \"The action to take. MUST be one of the tool names listed in `available_tools`
+        input, or the literal string \\\"finish\\\" to provide the final answer.\"\n    },\n    \"action_input\":
+        {\n      \"type\": \"string\",\n      \"description\": \"Input for the chosen
+        action. If action is a tool name, this MUST be a JSON object matching the
+        tool''s schema. If action is \\\"finish\\\", this field MUST contain the final
+        result based on processing the input data.\"\n    }\n  },\n  \"required\":
+        [\n    \"thought\",\n    \"action\",\n    \"action_input\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Generate a thought about what to do next to process the given
+        inputs."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"write_function_reverse_string\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [],\n  \"available_tools\": [\n    {\n      \"name\": \"read_file\",\n      \"description\":
+        \"Read contents of a file at the given path\",\n      \"schema\": {\n        \"name\":
+        \"read_file\",\n        \"description\": \"Read contents of a file at the
+        given path\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"path\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter path\"\n            }\n          },\n          \"required\": [\n            \"path\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"write_file\",\n      \"description\": \"Write content to a file at the given
+        path. Creates parent directories if needed.\",\n      \"schema\": {\n        \"name\":
+        \"write_file\",\n        \"description\": \"Write content to a file at the
+        given path. Creates parent directories if needed.\",\n        \"parameters\":
+        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"path\":
+        {\n              \"type\": \"string\",\n              \"description\": \"Parameter
+        path\"\n            },\n            \"content\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter content\"\n            }\n          },\n          \"required\":
+        [\n            \"path\",\n            \"content\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"search_code\",\n      \"description\": \"Search for a pattern in code files
+        using ripgrep. Returns matching lines with file paths and line numbers.\",\n      \"schema\":
+        {\n        \"name\": \"search_code\",\n        \"description\": \"Search for
+        a pattern in code files using ripgrep. Returns matching lines with file paths
+        and line numbers.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"pattern\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter pattern\"\n            },\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path (optional)\"\n            },\n            \"file_type\":
+        {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ],\n              \"description\":
+        \"Parameter file_type (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"pattern\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"run_command\",\n      \"description\": \"Execute a shell command and return
+        its output. Use for running tests, linters, or other development tools.\",\n      \"schema\":
+        {\n        \"name\": \"run_command\",\n        \"description\": \"Execute
+        a shell command and return its output. Use for running tests, linters, or
+        other development tools.\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"command\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter command\"\n            },\n            \"timeout\":
+        {\n              \"type\": \"integer\",\n              \"description\": \"Parameter
+        timeout (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"command\"\n          ]\n        }\n      }\n    }\n  ]\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '8511'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:08:43 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2368'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2383'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9975'
+      X-Ratelimit-Remaining-Tokens:
+      - '198099'
+      X-Ratelimit-Reset-Requests:
+      - 3m32.81s
+      X-Ratelimit-Reset-Tokens:
+      - 570ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd78c7f969608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgzzlAHqWm2NahYJ2qyLHCqbvL6km",
+          "object": "chat.completion",
+          "created": 1764364121,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"thought\": \"To complete the task of writing a function that reverses a string, I should first determine where the function will be saved. Since there's no prior history, I'll need to create a write_file action with appropriate input for the file path and content.\",\n  \"action\": \"write_file\",\n  \"action_input\": {\n    \"path\": \"reverse_string_function.js\",\n    \"content\": \"function reverseString(str) { return str.split('').reverse().join(''); }\"\n  }\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1628,
+            "completion_tokens": 112,
+            "total_tokens": 1740,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:08:43 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts, actions, and observations.\"\n    },\n    \"observation\": {\n      \"type\":
+        \"string\",\n      \"description\": \"The result from the last action\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"observation\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"interpretation\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Interpretation of the observation\"\n    },\n    \"next_step\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"continue\",\n        \"finish\"\n      ],\n      \"description\":
+        \"What to do next: ''#<DSPy::NextStep::Continue>'' or ''#<DSPy::NextStep::Finish>''\"\n    }\n  },\n  \"required\":
+        [\n    \"interpretation\",\n    \"next_step\"\n  ]\n}\n```\n\nAll interactions
+        will be structured in the following way, with the appropriate values filled
+        in.\n## Input values\n```json\n{input_values}\n```\n## Output values\nRespond
+        exclusively with the output schema fields in the json block below.\n```json\n{output_values}\n```\n\nIn
+        adhering to this structure, your objective is: Process the observation from
+        a tool and decide what to do next."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"write_function_reverse_string\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [\n    {\n      \"step\": 1,\n      \"thought\": \"To complete the task of
+        writing a function that reverses a string, I should first determine where
+        the function will be saved. Since there''s no prior history, I''ll need to
+        create a write_file action with appropriate input for the file path and content.\",\n      \"action\":
+        \"write_file\",\n      \"action_input\": {\n        \"path\": \"reverse_string_function.js\",\n        \"content\":
+        \"function reverseString(str) { return str.split('''').reverse().join('''');
+        }\"\n      },\n      \"observation\": \"Successfully wrote 72 bytes to reverse_string_function.js\"\n    }\n  ],\n  \"observation\":
+        \"Successfully wrote 72 bytes to reverse_string_function.js\"\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '4471'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:08:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1197'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '1247'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9974'
+      X-Ratelimit-Remaining-Tokens:
+      - '199009'
+      X-Ratelimit-Reset-Requests:
+      - 3m38.896s
+      X-Ratelimit-Reset-Tokens:
+      - 297ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd79d0edd9608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgzznmqVcV8xHg26bJiTzn7Y0N3Zz",
+          "object": "chat.completion",
+          "created": 1764364123,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"interpretation\": \"The function to reverse a string has been successfully written to the specified file.\",\n  \"next_step\": \"finish\"\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 889,
+            "completion_tokens": 39,
+            "total_tokens": 928,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:08:44 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts and actions, including observations from tools.\"\n    },\n    \"available_tools\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\":
+        {\n          \"_type\": {\n            \"type\": \"string\",\n            \"const\":
+        \"AvailableTool\"\n          },\n          \"name\": {\n            \"type\":
+        \"string\"\n          },\n          \"description\": {\n            \"type\":
+        \"string\"\n          },\n          \"schema\": {\n            \"type\": \"object\",\n            \"propertyNames\":
+        {\n              \"type\": \"string\"\n            },\n            \"additionalProperties\":
+        {\n              \"type\": \"string\"\n            },\n            \"description\":
+        \"A mapping where keys are strings and values are strings\"\n          }\n        },\n        \"required\":
+        [\n          \"_type\",\n          \"name\",\n          \"description\",\n          \"schema\"\n        ],\n        \"description\":
+        \"DSPy::ReAct::AvailableTool struct\"\n      },\n      \"description\": \"Array
+        of available tools with their JSON schemas.\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"available_tools\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"thought\": {\n      \"type\": \"string\",\n      \"description\":
+        \"Reasoning about what to do next, considering the history and observations.\"\n    },\n    \"action\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"read_file\",\n        \"write_file\",\n        \"search_code\",\n        \"run_command\",\n        \"finish\"\n      ],\n      \"description\":
+        \"The action to take. MUST be one of the tool names listed in `available_tools`
+        input, or the literal string \\\"finish\\\" to provide the final answer.\"\n    },\n    \"action_input\":
+        {\n      \"type\": \"string\",\n      \"description\": \"Input for the chosen
+        action. If action is a tool name, this MUST be a JSON object matching the
+        tool''s schema. If action is \\\"finish\\\", this field MUST contain the final
+        result based on processing the input data.\"\n    }\n  },\n  \"required\":
+        [\n    \"thought\",\n    \"action\",\n    \"action_input\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Generate a thought about what to do next to process the given
+        inputs."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"write_function_reverse_string\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [\n    {\n      \"step\": 1,\n      \"thought\": \"To complete the task of
+        writing a function that reverses a string, I should first determine where
+        the function will be saved. Since there''s no prior history, I''ll need to
+        create a write_file action with appropriate input for the file path and content.\",\n      \"action\":
+        \"write_file\",\n      \"action_input\": {\n        \"path\": \"reverse_string_function.js\",\n        \"content\":
+        \"function reverseString(str) { return str.split('''').reverse().join('''');
+        }\"\n      },\n      \"observation\": \"Successfully wrote 72 bytes to reverse_string_function.js\"\n    }\n  ],\n  \"available_tools\":
+        [\n    {\n      \"name\": \"read_file\",\n      \"description\": \"Read contents
+        of a file at the given path\",\n      \"schema\": {\n        \"name\": \"read_file\",\n        \"description\":
+        \"Read contents of a file at the given path\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path\"\n            }\n          },\n          \"required\":
+        [\n            \"path\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"write_file\",\n      \"description\": \"Write content to a file at the given
+        path. Creates parent directories if needed.\",\n      \"schema\": {\n        \"name\":
+        \"write_file\",\n        \"description\": \"Write content to a file at the
+        given path. Creates parent directories if needed.\",\n        \"parameters\":
+        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"path\":
+        {\n              \"type\": \"string\",\n              \"description\": \"Parameter
+        path\"\n            },\n            \"content\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter content\"\n            }\n          },\n          \"required\":
+        [\n            \"path\",\n            \"content\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"search_code\",\n      \"description\": \"Search for a pattern in code files
+        using ripgrep. Returns matching lines with file paths and line numbers.\",\n      \"schema\":
+        {\n        \"name\": \"search_code\",\n        \"description\": \"Search for
+        a pattern in code files using ripgrep. Returns matching lines with file paths
+        and line numbers.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"pattern\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter pattern\"\n            },\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path (optional)\"\n            },\n            \"file_type\":
+        {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ],\n              \"description\":
+        \"Parameter file_type (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"pattern\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"run_command\",\n      \"description\": \"Execute a shell command and return
+        its output. Use for running tests, linters, or other development tools.\",\n      \"schema\":
+        {\n        \"name\": \"run_command\",\n        \"description\": \"Execute
+        a shell command and return its output. Use for running tests, linters, or
+        other development tools.\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"command\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter command\"\n            },\n            \"timeout\":
+        {\n              \"type\": \"integer\",\n              \"description\": \"Parameter
+        timeout (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"command\"\n          ]\n        }\n      }\n    }\n  ]\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '9134'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:08:46 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1731'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '1766'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9974'
+      X-Ratelimit-Remaining-Tokens:
+      - '197952'
+      X-Ratelimit-Reset-Requests:
+      - 3m37.569s
+      X-Ratelimit-Reset-Tokens:
+      - 614ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd7a54b989608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgzzpoRtmyyIdjyoGaC8jZCEVWyRK",
+          "object": "chat.completion",
+          "created": 1764364125,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"thought\": \"Now that the function to reverse a string has been successfully written to a file, the next step should be to read the file contents to verify that it was written correctly.\",\n  \"action\": \"read_file\",\n  \"action_input\": {\n    \"path\": \"reverse_string_function.js\"\n  }\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1760,
+            "completion_tokens": 75,
+            "total_tokens": 1835,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:08:46 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"task\": {\n      \"type\": \"string\"\n    },\n    \"solution\":
+        {\n      \"type\": \"string\"\n    },\n    \"expected_behavior\": {\n      \"type\":
+        \"string\"\n    }\n  },\n  \"required\": [\n    \"task\",\n    \"solution\",\n    \"expected_behavior\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"score\": {\n      \"type\": \"number\"\n    },\n    \"passed\":
+        {\n      \"type\": \"boolean\"\n    },\n    \"critique\": {\n      \"type\":
+        \"string\"\n    },\n    \"suggestions\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\n    \"score\",\n    \"passed\",\n    \"critique\",\n    \"suggestions\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Evaluate code quality and correctness. Be critical and thorough."},{"role":"user","content":"##
+        Input Values\n```json\n{\n  \"task\": \"write_function_reverse_string\",\n  \"solution\":
+        \"The function to reverse a string has been successfully written to the specified
+        file.\",\n  \"expected_behavior\": \"The solution should correctly and completely
+        address the task: write_function_reverse_string\"\n}\n```\n\nRespond with
+        the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '1921'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:08:49 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2755'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2768'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9973'
+      X-Ratelimit-Remaining-Tokens:
+      - '199588'
+      X-Ratelimit-Reset-Requests:
+      - 3m52.94s
+      X-Ratelimit-Reset-Tokens:
+      - 123ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd7b13c279608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgzzrqC2p5FsZ4Uyiy701mlgBhtj0",
+          "object": "chat.completion",
+          "created": 1764364127,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"score\": 5,\n  \"passed\": false,\n  \"critique\": \"The solution does not provide the actual implementation of the function to reverse a string. It only states that the function has been written to a file without showing the code or verifying that it works as intended.\",\n  \"suggestions\": [\n    \"Provide the actual code for the function that reverses a string.\",\n    \"Include test cases or examples to demonstrate that the function works correctly.\",\n    \"Ensure that the implementation follows best practices and includes input validation.\"\n  ]\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 422,
+            "completion_tokens": 121,
+            "total_tokens": 543,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b547601dbd"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:08:49 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"user_input\": {\n      \"type\": \"string\"\n    },\n    \"previous_task\":
+        {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"previous_solution_summary\":
+        {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"available_suggestions\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\":
+        [\n    \"user_input\"\n  ]\n}\n```\nYour output schema fields are:\n```json\n{\n  \"$schema\":
+        \"http://json-schema.org/draft-06/schema#\",\n  \"type\": \"object\",\n  \"properties\":
+        {\n    \"intent\": {\n      \"type\": \"string\"\n    },\n    \"resolved_task\":
+        {\n      \"type\": \"string\"\n    },\n    \"suggestion_index\": {\n      \"type\":
+        [\n        \"integer\",\n        \"null\"\n      ]\n    },\n    \"confidence\":
+        {\n      \"type\": \"number\"\n    },\n    \"reasoning\": {\n      \"type\":
+        \"string\"\n    }\n  },\n  \"required\": [\n    \"intent\",\n    \"resolved_task\",\n    \"suggestion_index\",\n    \"confidence\",\n    \"reasoning\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Classify user input and resolve it to an executable task."},{"role":"user","content":"##
+        Input Values\n```json\n{\n  \"user_input\": \"Now write a function to calculate
+        fibonacci numbers\",\n  \"previous_task\": \"write_function_reverse_string\",\n  \"previous_solution_summary\":
+        \"The function to reverse a string has been successfully written to the specified
+        file.\",\n  \"available_suggestions\": [\n    \"Provide the actual code for
+        the function that reverses a string.\",\n    \"Include test cases or examples
+        to demonstrate that the function works correctly.\",\n    \"Ensure that the
+        implementation follows best practices and includes input validation.\"\n  ]\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '2463'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:08:53 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '3437'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '3456'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9972'
+      X-Ratelimit-Remaining-Tokens:
+      - '199463'
+      X-Ratelimit-Reset-Requests:
+      - 3m58.67s
+      X-Ratelimit-Reset-Tokens:
+      - 161ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd7c36a2c9608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CgzztJInX7WIqxbIvPuwvXMSbC8rH",
+          "object": "chat.completion",
+          "created": 1764364129,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"intent\": \"write_function_fibonacci\",\n  \"resolved_task\": \"write a function to calculate fibonacci numbers\",\n  \"suggestion_index\": null,\n  \"confidence\": 0.95,\n  \"reasoning\": \"The user explicitly asked for a function to calculate Fibonacci numbers, indicating a clear intent to create a specific programming task.\"\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 530,
+            "completion_tokens": 80,
+            "total_tokens": 610,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b547601dbd"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:08:53 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts and actions, including observations from tools.\"\n    },\n    \"available_tools\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\":
+        {\n          \"_type\": {\n            \"type\": \"string\",\n            \"const\":
+        \"AvailableTool\"\n          },\n          \"name\": {\n            \"type\":
+        \"string\"\n          },\n          \"description\": {\n            \"type\":
+        \"string\"\n          },\n          \"schema\": {\n            \"type\": \"object\",\n            \"propertyNames\":
+        {\n              \"type\": \"string\"\n            },\n            \"additionalProperties\":
+        {\n              \"type\": \"string\"\n            },\n            \"description\":
+        \"A mapping where keys are strings and values are strings\"\n          }\n        },\n        \"required\":
+        [\n          \"_type\",\n          \"name\",\n          \"description\",\n          \"schema\"\n        ],\n        \"description\":
+        \"DSPy::ReAct::AvailableTool struct\"\n      },\n      \"description\": \"Array
+        of available tools with their JSON schemas.\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"available_tools\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"thought\": {\n      \"type\": \"string\",\n      \"description\":
+        \"Reasoning about what to do next, considering the history and observations.\"\n    },\n    \"action\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"read_file\",\n        \"write_file\",\n        \"search_code\",\n        \"run_command\",\n        \"finish\"\n      ],\n      \"description\":
+        \"The action to take. MUST be one of the tool names listed in `available_tools`
+        input, or the literal string \\\"finish\\\" to provide the final answer.\"\n    },\n    \"action_input\":
+        {\n      \"type\": \"string\",\n      \"description\": \"Input for the chosen
+        action. If action is a tool name, this MUST be a JSON object matching the
+        tool''s schema. If action is \\\"finish\\\", this field MUST contain the final
+        result based on processing the input data.\"\n    }\n  },\n  \"required\":
+        [\n    \"thought\",\n    \"action\",\n    \"action_input\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Generate a thought about what to do next to process the given
+        inputs."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"write a function
+        to calculate fibonacci numbers\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [],\n  \"available_tools\": [\n    {\n      \"name\": \"read_file\",\n      \"description\":
+        \"Read contents of a file at the given path\",\n      \"schema\": {\n        \"name\":
+        \"read_file\",\n        \"description\": \"Read contents of a file at the
+        given path\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"path\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter path\"\n            }\n          },\n          \"required\": [\n            \"path\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"write_file\",\n      \"description\": \"Write content to a file at the given
+        path. Creates parent directories if needed.\",\n      \"schema\": {\n        \"name\":
+        \"write_file\",\n        \"description\": \"Write content to a file at the
+        given path. Creates parent directories if needed.\",\n        \"parameters\":
+        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"path\":
+        {\n              \"type\": \"string\",\n              \"description\": \"Parameter
+        path\"\n            },\n            \"content\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter content\"\n            }\n          },\n          \"required\":
+        [\n            \"path\",\n            \"content\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"search_code\",\n      \"description\": \"Search for a pattern in code files
+        using ripgrep. Returns matching lines with file paths and line numbers.\",\n      \"schema\":
+        {\n        \"name\": \"search_code\",\n        \"description\": \"Search for
+        a pattern in code files using ripgrep. Returns matching lines with file paths
+        and line numbers.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"pattern\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter pattern\"\n            },\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path (optional)\"\n            },\n            \"file_type\":
+        {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ],\n              \"description\":
+        \"Parameter file_type (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"pattern\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"run_command\",\n      \"description\": \"Execute a shell command and return
+        its output. Use for running tests, linters, or other development tools.\",\n      \"schema\":
+        {\n        \"name\": \"run_command\",\n        \"description\": \"Execute
+        a shell command and return its output. Use for running tests, linters, or
+        other development tools.\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"command\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter command\"\n            },\n            \"timeout\":
+        {\n              \"type\": \"integer\",\n              \"description\": \"Parameter
+        timeout (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"command\"\n          ]\n        }\n      }\n    }\n  ]\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '8529'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:08:56 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2973'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2995'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9971'
+      X-Ratelimit-Remaining-Tokens:
+      - '198095'
+      X-Ratelimit-Reset-Requests:
+      - 4m3.727s
+      X-Ratelimit-Reset-Tokens:
+      - 571ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd7d9bd979608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-Cgzzx8JRiG0AvXb3rjB2dov7exPL1",
+          "object": "chat.completion",
+          "created": 1764364133,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"thought\": \"I need to write a function to calculate Fibonacci numbers. Since this is a coding task, I might want to create a new file to hold this function's implementation. Thus, I should prepare to use the 'write_file' tool to save the function code in a specified path.\",\n  \"action\": \"write_file\",\n  \"action_input\": {\n    \"path\": \"fibonacci.py\",\n    \"content\": \"def fibonacci(n):\\n    if n <= 0:\\n        return 0\\n    elif n == 1:\\n        return 1\\n    else:\\n        return fibonacci(n-1) + fibonacci(n-2)\"\n  }\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1631,
+            "completion_tokens": 150,
+            "total_tokens": 1781,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:08:56 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts, actions, and observations.\"\n    },\n    \"observation\": {\n      \"type\":
+        \"string\",\n      \"description\": \"The result from the last action\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"observation\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"interpretation\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Interpretation of the observation\"\n    },\n    \"next_step\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"continue\",\n        \"finish\"\n      ],\n      \"description\":
+        \"What to do next: ''#<DSPy::NextStep::Continue>'' or ''#<DSPy::NextStep::Finish>''\"\n    }\n  },\n  \"required\":
+        [\n    \"interpretation\",\n    \"next_step\"\n  ]\n}\n```\n\nAll interactions
+        will be structured in the following way, with the appropriate values filled
+        in.\n## Input values\n```json\n{input_values}\n```\n## Output values\nRespond
+        exclusively with the output schema fields in the json block below.\n```json\n{output_values}\n```\n\nIn
+        adhering to this structure, your objective is: Process the observation from
+        a tool and decide what to do next."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"write a function
+        to calculate fibonacci numbers\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [\n    {\n      \"step\": 1,\n      \"thought\": \"I need to write a function
+        to calculate Fibonacci numbers. Since this is a coding task, I might want
+        to create a new file to hold this function''s implementation. Thus, I should
+        prepare to use the ''write_file'' tool to save the function code in a specified
+        path.\",\n      \"action\": \"write_file\",\n      \"action_input\": {\n        \"path\":
+        \"fibonacci.py\",\n        \"content\": \"def fibonacci(n):\\n    if n <=
+        0:\\n        return 0\\n    elif n == 1:\\n        return 1\\n    else:\\n        return
+        fibonacci(n-1) + fibonacci(n-2)\"\n      },\n      \"observation\": \"Successfully
+        wrote 140 bytes to fibonacci.py\"\n    }\n  ],\n  \"observation\": \"Successfully
+        wrote 140 bytes to fibonacci.py\"\n}\n```\n\nRespond with the corresponding
+        output schema fields wrapped in a ```json ``` block,\nstarting with the heading
+        `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '4538'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:08:57 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1189'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '1203'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9971'
+      X-Ratelimit-Remaining-Tokens:
+      - '198994'
+      X-Ratelimit-Reset-Requests:
+      - 4m9.272s
+      X-Ratelimit-Reset-Tokens:
+      - 301ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd7ed2b619608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-Ch000VCgGrbtHIYgLJCd9HuWOdLnB",
+          "object": "chat.completion",
+          "created": 1764364136,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"interpretation\": \"The function to calculate Fibonacci numbers has been successfully written to the file 'fibonacci.py'.\",\n  \"next_step\": \"finish\"\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 926,
+            "completion_tokens": 43,
+            "total_tokens": 969,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:08:57 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"input_context\": {\n      \"type\":
+        \"string\",\n      \"description\": \"Serialized representation of all input
+        fields\"\n    },\n    \"history\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"object\",\n        \"properties\": {\n          \"_type\":
+        {\n            \"type\": \"string\",\n            \"const\": \"HistoryEntry\"\n          },\n          \"step\":
+        {\n            \"type\": \"integer\"\n          },\n          \"thought\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action\":
+        {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          },\n          \"action_input\":
+        {\n            \"oneOf\": [\n              {\n                \"type\": \"string\"\n              },\n              {\n                \"type\":
+        \"number\"\n              },\n              {\n                \"type\": \"object\",\n                \"propertyNames\":
+        {\n                  \"type\": \"string\"\n                },\n                \"additionalProperties\":
+        {\n                  \"type\": \"string\"\n                },\n                \"description\":
+        \"A mapping where keys are strings and values are strings\"\n              },\n              {\n                \"type\":
+        \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              {\n                \"type\":
+        \"null\"\n              }\n            ],\n            \"description\": \"Union
+        of multiple types\"\n          },\n          \"observation\": {\n            \"type\":
+        \"string\"\n          }\n        },\n        \"required\": [\n          \"_type\",\n          \"step\",\n          \"observation\"\n        ],\n        \"description\":
+        \"DSPy::HistoryEntry struct\"\n      },\n      \"description\": \"Previous
+        thoughts and actions, including observations from tools.\"\n    },\n    \"available_tools\":
+        {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\":
+        {\n          \"_type\": {\n            \"type\": \"string\",\n            \"const\":
+        \"AvailableTool\"\n          },\n          \"name\": {\n            \"type\":
+        \"string\"\n          },\n          \"description\": {\n            \"type\":
+        \"string\"\n          },\n          \"schema\": {\n            \"type\": \"object\",\n            \"propertyNames\":
+        {\n              \"type\": \"string\"\n            },\n            \"additionalProperties\":
+        {\n              \"type\": \"string\"\n            },\n            \"description\":
+        \"A mapping where keys are strings and values are strings\"\n          }\n        },\n        \"required\":
+        [\n          \"_type\",\n          \"name\",\n          \"description\",\n          \"schema\"\n        ],\n        \"description\":
+        \"DSPy::ReAct::AvailableTool struct\"\n      },\n      \"description\": \"Array
+        of available tools with their JSON schemas.\"\n    }\n  },\n  \"required\":
+        [\n    \"input_context\",\n    \"history\",\n    \"available_tools\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"thought\": {\n      \"type\": \"string\",\n      \"description\":
+        \"Reasoning about what to do next, considering the history and observations.\"\n    },\n    \"action\":
+        {\n      \"type\": \"string\",\n      \"enum\": [\n        \"read_file\",\n        \"write_file\",\n        \"search_code\",\n        \"run_command\",\n        \"finish\"\n      ],\n      \"description\":
+        \"The action to take. MUST be one of the tool names listed in `available_tools`
+        input, or the literal string \\\"finish\\\" to provide the final answer.\"\n    },\n    \"action_input\":
+        {\n      \"type\": \"string\",\n      \"description\": \"Input for the chosen
+        action. If action is a tool name, this MUST be a JSON object matching the
+        tool''s schema. If action is \\\"finish\\\", this field MUST contain the final
+        result based on processing the input data.\"\n    }\n  },\n  \"required\":
+        [\n    \"thought\",\n    \"action\",\n    \"action_input\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Generate a thought about what to do next to process the given
+        inputs."},{"role":"user","content":"## Input Values\n```json\n{\n  \"input_context\":
+        \"{\\\"_type\\\":\\\"AnonymousStruct\\\",\\\"task\\\":\\\"write a function
+        to calculate fibonacci numbers\\\",\\\"context\\\":\\\"\\\",\\\"history\\\":[]}\",\n  \"history\":
+        [\n    {\n      \"step\": 1,\n      \"thought\": \"I need to write a function
+        to calculate Fibonacci numbers. Since this is a coding task, I might want
+        to create a new file to hold this function''s implementation. Thus, I should
+        prepare to use the ''write_file'' tool to save the function code in a specified
+        path.\",\n      \"action\": \"write_file\",\n      \"action_input\": {\n        \"path\":
+        \"fibonacci.py\",\n        \"content\": \"def fibonacci(n):\\n    if n <=
+        0:\\n        return 0\\n    elif n == 1:\\n        return 1\\n    else:\\n        return
+        fibonacci(n-1) + fibonacci(n-2)\"\n      },\n      \"observation\": \"Successfully
+        wrote 140 bytes to fibonacci.py\"\n    }\n  ],\n  \"available_tools\": [\n    {\n      \"name\":
+        \"read_file\",\n      \"description\": \"Read contents of a file at the given
+        path\",\n      \"schema\": {\n        \"name\": \"read_file\",\n        \"description\":
+        \"Read contents of a file at the given path\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path\"\n            }\n          },\n          \"required\":
+        [\n            \"path\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"write_file\",\n      \"description\": \"Write content to a file at the given
+        path. Creates parent directories if needed.\",\n      \"schema\": {\n        \"name\":
+        \"write_file\",\n        \"description\": \"Write content to a file at the
+        given path. Creates parent directories if needed.\",\n        \"parameters\":
+        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"path\":
+        {\n              \"type\": \"string\",\n              \"description\": \"Parameter
+        path\"\n            },\n            \"content\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter content\"\n            }\n          },\n          \"required\":
+        [\n            \"path\",\n            \"content\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"search_code\",\n      \"description\": \"Search for a pattern in code files
+        using ripgrep. Returns matching lines with file paths and line numbers.\",\n      \"schema\":
+        {\n        \"name\": \"search_code\",\n        \"description\": \"Search for
+        a pattern in code files using ripgrep. Returns matching lines with file paths
+        and line numbers.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\":
+        {\n            \"pattern\": {\n              \"type\": \"string\",\n              \"description\":
+        \"Parameter pattern\"\n            },\n            \"path\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter path (optional)\"\n            },\n            \"file_type\":
+        {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ],\n              \"description\":
+        \"Parameter file_type (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"pattern\"\n          ]\n        }\n      }\n    },\n    {\n      \"name\":
+        \"run_command\",\n      \"description\": \"Execute a shell command and return
+        its output. Use for running tests, linters, or other development tools.\",\n      \"schema\":
+        {\n        \"name\": \"run_command\",\n        \"description\": \"Execute
+        a shell command and return its output. Use for running tests, linters, or
+        other development tools.\",\n        \"parameters\": {\n          \"type\":
+        \"object\",\n          \"properties\": {\n            \"command\": {\n              \"type\":
+        \"string\",\n              \"description\": \"Parameter command\"\n            },\n            \"timeout\":
+        {\n              \"type\": \"integer\",\n              \"description\": \"Parameter
+        timeout (optional)\"\n            }\n          },\n          \"required\":
+        [\n            \"command\"\n          ]\n        }\n      }\n    }\n  ]\n}\n```\n\nRespond
+        with the corresponding output schema fields wrapped in a ```json ``` block,\nstarting
+        with the heading `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '9214'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:09:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '5771'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '5791'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9971'
+      X-Ratelimit-Remaining-Tokens:
+      - '197934'
+      X-Ratelimit-Reset-Requests:
+      - 4m7.973s
+      X-Ratelimit-Reset-Tokens:
+      - 619ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd7f53d959608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-Ch001a6KJUv1LWg9jEKZJL5c5rtnl",
+          "object": "chat.completion",
+          "created": 1764364137,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"thought\": \"I have successfully written the Fibonacci function code to 'fibonacci.py'. Next, I need to verify that the function works correctly. I will run a test command to execute the Fibonacci function and confirm its output.\",\n  \"action\": \"run_command\",\n  \"action_input\": {\n    \"command\": \"python3 -c 'from fibonacci import fibonacci; print(fibonacci(10))'\"\n  }\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1799,
+            "completion_tokens": 95,
+            "total_tokens": 1894,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_560af6e559"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:09:03 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"Your
+        input schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"task\": {\n      \"type\": \"string\"\n    },\n    \"solution\":
+        {\n      \"type\": \"string\"\n    },\n    \"expected_behavior\": {\n      \"type\":
+        \"string\"\n    }\n  },\n  \"required\": [\n    \"task\",\n    \"solution\",\n    \"expected_behavior\"\n  ]\n}\n```\nYour
+        output schema fields are:\n```json\n{\n  \"$schema\": \"http://json-schema.org/draft-06/schema#\",\n  \"type\":
+        \"object\",\n  \"properties\": {\n    \"score\": {\n      \"type\": \"number\"\n    },\n    \"passed\":
+        {\n      \"type\": \"boolean\"\n    },\n    \"critique\": {\n      \"type\":
+        \"string\"\n    },\n    \"suggestions\": {\n      \"type\": \"array\",\n      \"items\":
+        {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\n    \"score\",\n    \"passed\",\n    \"critique\",\n    \"suggestions\"\n  ]\n}\n```\n\nAll
+        interactions will be structured in the following way, with the appropriate
+        values filled in.\n## Input values\n```json\n{input_values}\n```\n## Output
+        values\nRespond exclusively with the output schema fields in the json block
+        below.\n```json\n{output_values}\n```\n\nIn adhering to this structure, your
+        objective is: Evaluate code quality and correctness. Be critical and thorough."},{"role":"user","content":"##
+        Input Values\n```json\n{\n  \"task\": \"write a function to calculate fibonacci
+        numbers\",\n  \"solution\": \"The function to calculate Fibonacci numbers
+        has been successfully written to the file ''fibonacci.py''.\",\n  \"expected_behavior\":
+        \"The solution should correctly and completely address the task: write a function
+        to calculate fibonacci numbers\"\n}\n```\n\nRespond with the corresponding
+        output schema fields wrapped in a ```json ``` block,\nstarting with the heading
+        `## Output values`."}],"temperature":1.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAI::Client/Ruby 0.36.1
+      Host:
+      - api.openai.com
+      X-Stainless-Arch:
+      - arm64
+      X-Stainless-Lang:
+      - ruby
+      X-Stainless-Os:
+      - MacOS
+      X-Stainless-Package-Version:
+      - 0.36.1
+      X-Stainless-Runtime:
+      - ruby
+      X-Stainless-Runtime-Version:
+      - 3.3.6
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      X-Stainless-Retry-Count:
+      - '0'
+      X-Stainless-Timeout:
+      - '600.0'
+      Content-Length:
+      - '1973'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 28 Nov 2025 21:09:06 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2921'
+      Openai-Project:
+      - proj_n52OL5vlzVaXGnYDaGWmVX5F
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '2937'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9970'
+      X-Ratelimit-Remaining-Tokens:
+      - '199575'
+      X-Ratelimit-Reset-Requests:
+      - 4m19.094s
+      X-Ratelimit-Reset-Tokens:
+      - 127ms
+      X-Request-Id:
+      - "<REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<REDACTED>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9a5cd81bdbfd9608-EWR
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-Ch008S7mpejj4ej7njnK73tvx2umf",
+          "object": "chat.completion",
+          "created": 1764364144,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "## Output values\n```json\n{\n  \"score\": 6.0,\n  \"passed\": false,\n  \"critique\": \"The provided solution states that the function has been written to a file, but it does not show or provide the actual function implementation. Without the implementation, it is impossible to assess if the function correctly calculates Fibonacci numbers.\",\n  \"suggestions\": [\n    \"Provide the actual code implementation of the Fibonacci function.\",\n    \"Include test cases to demonstrate that the function works as expected.\",\n    \"Ensure that the function can handle edge cases, such as negative inputs or non-integer values.\"\n  ]\n}\n```",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 432,
+            "completion_tokens": 129,
+            "total_tokens": 561,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b547601dbd"
+        }
+  recorded_at: Fri, 28 Nov 2025 21:09:06 GMT
+recorded_with: VCR 6.3.1

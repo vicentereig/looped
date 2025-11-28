@@ -37,4 +37,24 @@ module Looped
       const :suggestions, T::Array[String]
     end
   end
+
+  # Intent classification for routing user input
+  class IntentClassificationSignature < DSPy::Signature
+    description 'Classify user input and resolve it to an executable task.'
+
+    input do
+      const :user_input, String
+      const :previous_task, T.nilable(String), default: nil
+      const :previous_solution_summary, T.nilable(String), default: nil
+      const :available_suggestions, T::Array[String], default: []
+    end
+
+    output do
+      const :intent, String, desc: 'new_task | follow_up | select_suggestion'
+      const :resolved_task, String, desc: 'The executable task (use suggestion text if selecting)'
+      const :suggestion_index, T.nilable(Integer)
+      const :confidence, Float
+      const :reasoning, String
+    end
+  end
 end
