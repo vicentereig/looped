@@ -33,3 +33,4 @@ Thumbs.db
 # ~/.looped/ is the actual location, but ignore any local copies
 /.looped/
 add_two_numbers.rb
+log/

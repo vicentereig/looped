@@ -38,7 +38,7 @@ module Looped
       @max_metric_calls = max_metric_calls
       @check_interval = check_interval
       @reflection_model = T.let(
-        reflection_model || ENV.fetch('LOOPED_REFLECTION_MODEL', 'gpt-4o-mini'),
+        reflection_model || ENV.fetch('LOOPED_REFLECTION_MODEL', 'openai/gpt-4o-mini'),
         String
       )
       @running = T.let(false, T::Boolean)
@@ -85,7 +85,7 @@ module Looped
       metric = build_metric
 
       # Create reflection LM for GEPA
-      reflection_lm = DSPy::ReflectionLM.new(model: @reflection_model)
+      reflection_lm = DSPy::ReflectionLM.new(@reflection_model, api_key: resolve_api_key(@reflection_model))
 
       # Build feedback map for multi-predictor optimization
       feedback_map = build_feedback_map
@@ -104,7 +104,12 @@ module Looped
         }
       )
 
-      result = gepa.compile(agent.react, trainset: trainset)
+      # Split trainset - use majority for training, rest for validation
+      split_point = [(trainset.length * 0.8).ceil, trainset.length - 1].min
+      train_examples = trainset[0...split_point]
+      val_examples = trainset[split_point..]
+
+      result = gepa.compile(agent.react, trainset: train_examples, valset: val_examples)
 
       # Extract optimized instructions from the best program
       save_optimized_instructions(result, current_instructions)
@@ -119,13 +124,15 @@ module Looped
     def build_trainset(training_results)
       training_results.map do |result|
         DSPy::Example.new(
-          input_values: {
+          signature_class: CodingTaskSignature,
+          input: {
             task: result.task,
             context: '',
             history: []
           },
           expected: {
-            solution: result.solution
+            solution: result.solution,
+            files_modified: []
           },
           metadata: {
             score: result.score,
@@ -209,7 +216,7 @@ module Looped
       lines.empty? ? feedback : lines.join
     end
 
-    sig { params(result: DSPy::Teleprompt::OptimizationResult, current: T.nilable(Types::Instructions)).void }
+    sig { params(result: T.untyped, current: T.nilable(Types::Instructions)).void }
     def save_optimized_instructions(result, current)
       optimized_program = result.optimized_program
 
@@ -243,6 +250,17 @@ module Looped
         predictor.prompt.instruction
       elsif predictor.respond_to?(:instruction)
         predictor.instruction
+      end
+    end
+
+    sig { params(model_id: String).returns(T.nilable(String)) }
+    def resolve_api_key(model_id)
+      provider = model_id.split('/').first
+      case provider
+      when 'openai' then ENV['OPENAI_API_KEY']
+      when 'anthropic' then ENV['ANTHROPIC_API_KEY']
+      when 'gemini', 'google' then ENV['GEMINI_API_KEY']
+      else ENV['OPENAI_API_KEY']
       end
     end
   end

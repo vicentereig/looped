@@ -32,7 +32,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'async', '~> 2.23'
   spec.add_dependency 'dspy', '~> 0.31.1'
   spec.add_dependency 'dspy-openai', '~> 1.0'
-  spec.add_dependency 'gepa', '~> 1.0.1'
+  spec.add_dependency 'dspy-gepa', '~> 1.0.3'
+  spec.add_dependency 'gepa', '~> 1.0.2'
   spec.add_dependency 'polars-df', '~> 0.23'
   spec.add_dependency 'sorbet-runtime', '~> 0.5'
 

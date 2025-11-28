@@ -5,10 +5,6 @@ require 'spec_helper'
 
 RSpec.describe 'Full Loop Integration', :vcr do
   describe 'GEPA optimization smoke test' do
-    # Skip until dspy-gepa dependency is resolved
-    before do
-      skip 'GEPA teleprompter not yet integrated - dspy-gepa needs version alignment'
-    end
 
     context 'when training buffer has enough results' do
       let(:state) { Looped::State.new }
