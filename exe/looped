@@ -88,16 +88,18 @@ if options[:context_file]
   context = File.read(options[:context_file])
 end
 
+# Build run options, filtering out nil values
+run_options = {
+  model: options[:model],
+  judge_model: options[:judge_model],
+  reflection_model: options[:reflection_model],
+  max_iterations: options[:max_iterations] || 10
+}.compact
+
 # If a task is provided as argument, run single task mode
 if ARGV.any?
   task = ARGV.join(' ')
-  result = Looped.execute(
-    task: task,
-    context: context,
-    model: options[:model],
-    judge_model: options[:judge_model],
-    max_iterations: options[:max_iterations] || 10
-  )
+  result = Looped.execute(task: task, context: context, **run_options)
 
   puts "Score: #{result.score.round(2)}/10"
   puts ''
@@ -110,9 +112,4 @@ if ARGV.any?
 end
 
 # Interactive mode
-Looped.run(
-  model: options[:model],
-  judge_model: options[:judge_model],
-  reflection_model: options[:reflection_model],
-  max_iterations: options[:max_iterations] || 10
-)
+Looped.run(**run_options)
